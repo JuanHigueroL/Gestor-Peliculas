@@ -2,19 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org"  lang="es">
 <head>
     <title>Cineando - Gestión de películas</title>
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}"> <!-- CSS General -->
 </head>
 <body>
 
+<!--
+    El sidebar se crea en el propio HTML para facilitar su personalización. Películas y Actores
+    comparten la misma estructura básica, pero cada uno tiene sus propios filtros específicos.
+
+    Sidebar de búsqueda para películas, se le añade el id "sidebar" y la clase "sidebar-busqueda".
+    El id se usa para controlar su visibilidad mediante JavaScript.
+    La clase se usa para aplicar estilos específicos de búsqueda de películas.
+    Este sidebar se encuentra oculto por defecto y se muestra al hacer clic en el icono de la lupa en el header.
+-->
 <div id="sidebar" class="sidebar-busqueda">
 
+    <!-- Header del sidebar con título y botón de cierre -->
     <div class="sidebar-header">
         <h3>Búsqueda Películas</h3>
         <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
     </div>
 
+    <!-- Contenido del sidebar con formularios de búsqueda -->
     <div class="sidebar-content">
 
+        <!-- Filtro por identificador-->
         <div class="filter-group">
             <h4>Por Identificador</h4>
             <form th:action="@{/peliculas/id}" method="get">
@@ -25,6 +37,7 @@
             </form>
         </div>
 
+        <!-- Filtro por título-->
         <div class="filter-group">
             <h4>Por Título</h4>
             <form th:action="@{/peliculas/titulo}" method="get">
@@ -35,6 +48,7 @@
             </form>
         </div>
 
+        <!-- Filtro por género-->
         <div class="filter-group">
             <h4>Por Género</h4>
             <form th:action="@{/peliculas/genero}" method="get">
@@ -45,6 +59,7 @@
             </form>
         </div>
 
+        <!-- Filtro por el id del actor-->
         <div class="filter-group">
             <h4>Por Actor</h4>
             <form th:action="@{/peliculas/actor}" method="get">
@@ -58,40 +73,56 @@
     </div>
 </div>
 
+    <!-- Header principal de películas y actores, se indica 'peliculas' para resaltar la sección correcta en el header -->
     <header th:replace="~{encabezado :: headerPrincipal('peliculas')}"></header>
 
+<!-- Main (contenido principal de la página) con alertas, sección de detalle destacado, botón de nueva película y listado de películas -->
 <main>
 
+    <!-- Alertas de éxito, error, guardado, actualizado, filtro y borrado -->
+    <!-- Se hace uso de attributes y flash attributes para mostrar los mensajes correspondientes -->
+
+    <!-- Alerta de éxito, aparece cuando se guarda una película-->
     <div th:if="${mensajeGuardado != null}" class="alerta alerta-guardado">
         <span th:text="${mensajeGuardado}"></span>
         <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
 
+    <!-- Alerta de actualización, aparece cuando una película es actualizada-->
     <div th:if="${mensajeActualizado != null}" class="alerta alerta-actualizado">
         <span th:text="${mensajeActualizado}"></span>
         <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
 
+    <!-- Alerta de filtro, aparece cuando se aplica un filtro de búsqueda-->
+    <!-- El mensaje cambia según el filtro aplicado -->
     <div th:if="${mensajeFiltro != null}" class="alerta alerta-filtro">
         <strong>ℹ️ Filtro:</strong> <span th:text="${mensajeFiltro}"></span>
         <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
 
+    <!-- Alerta de borrado, aparece cuando se elimina una película-->
     <div th:if="${mensajeBorrado != null}" class="alerta alerta-borrado">
         <span th:text="${mensajeBorrado}"></span>
         <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
 
+    <!-- Sección de detalle destacado, muestra la información detallada de la película seleccionada -->
     <section id="detalle-destacado">
+        <!-- Mensaje inicial cuando no se ha seleccionado ninguna película, este mensaje desaparece cuando se selecciona una película -->
         <div id="mensaje-vacio">
             <h2>Haz clic en una tarjeta de abajo para ver la información detallada aquí.</h2>
         </div>
 
+        <!-- Contenido detallado de la película seleccionada, este contenido inicia con display ='none', no se ve -->
         <div id="contenido-detalle">
+            <!-- Imagen y placeholder en caso de que no haya imagen -->
             <div class="detalle-img-container">
                 <img id="det-img" src="" alt="">
-                <div id="det-img-placeholder" class="placeholder-img" style="display:none;"></div>
+                <div id="det-img-placeholder" class="placeholder-img" ></div>
             </div>
+
+            <!-- Información de la película seleccionada, se añade la información mediante el script de películas a los id det-->
             <div class="detalle-info">
                 <h2 id="det-titulo"></h2>
                 <p style="margin-top: 15px; font-size: 0.9em; color: #888;">ID de referencia: #<span id="det-id"></span></p>
@@ -106,6 +137,7 @@
                     <p id="det-sinopsis"></p>
                 </div>
 
+                <!-- Acciones de editar y borrar la película seleccionada, se aplica el enlace mediante el script películas -->
                 <div class="detalle-acciones">
                     <a id="btn-editar-detalle" href="#" class="btn btn-editar">Editar</a>
                     <a id="btn-borrar-detalle" href="#" class="btn btn-borrar"
@@ -151,8 +183,8 @@
     <nav th:replace="~{paginator-nav :: paginator}"></nav>
 </div>
 
-<script th:src="@{/js/scripts.js}"></script>
-<script th:src="@{/js/peliculas.js}"></script>
+<script th:src="@{/js/scripts.js}"></script> <!-- JS General -->
+<script th:src="@{/js/peliculas.js}"></script> <!-- JS Específico de Películas -->
 
 </body>
 </html>
