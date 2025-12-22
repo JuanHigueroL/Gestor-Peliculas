@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cineando - Gestión de Actores</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+
+</head>
+<body>
+
+<div id="sidebar" class="sidebar-busqueda">
+
+    <div class="sidebar-header">
+        <h3>Búsqueda Actores</h3>
+        <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
+    </div>
+
+    <div class="sidebar-content">
+        <div class="filter-group">
+            <h4>Por Identificador</h4>
+            <form th:action="@{/actores/id}" method="get">
+                <div class="input-row">
+                    <input type="number" id="id" name="id" placeholder="Ej: 5">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<header th:replace="~{encabezado :: headerPrincipal('actores')}"></header>
+
+<main>
+    <div th:if="${mensajeExito != null}" class="alerta alerta-exito">
+        <span th:text="${mensajeExito}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div th:if="${mensajeError != null}" class="alerta alerta-error">
+        <span th:text="${mensajeError}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div th:if="${mensajeGuardado != null}" class="alerta alerta-guardado">
+        <span th:text="${mensajeGuardado}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div th:if="${mensajeActualizado != null}" class="alerta alerta-actualizado">
+        <span th:text="${mensajeActualizado}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div th:if="${mensajeFiltro != null}" class="alerta alerta-filtro">
+        <strong>ℹ️ Filtro:</strong> <span th:text="${mensajeFiltro}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div th:if="${mensajeBorrado != null}" class="alerta alerta-borrado">
+        <span th:text="${mensajeBorrado}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <section id="detalle-destacado">
+        <div id="mensaje-vacio">
+            <h2>Selecciona un actor para ver su ficha completa.</h2>
+        </div>
+
+        <div id="contenido-detalle">
+            <div class="detalle-img-container">
+                <svg class="default-user-icon" viewBox="0 0 24 24">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+            </div>
+            <div class="detalle-info">
+                <h2 id="det-nombre"></h2>
+                <p><strong>País de origen:</strong> <span id="det-pais"></span></p>
+                <p><strong>Fecha de nacimiento:</strong> <span id="det-fecha"></span></p>
+                <p><strong>Edad:</strong> <span id="det-edad" style="color: #666; font-style: italic;"></span></p>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #888;">ID de referencia: #<span id="det-id"></span></p>
+
+                <div class="detalle-acciones">
+                    <a id="btn-editar-actor" href="#" class="btn btn-editar">Editar</a>
+                    <a id="btn-borrar-actor" href="#" class="btn btn-borrar"
+                       onclick="return confirm('¿Estás seguro de que deseas eliminar este actor?')">Borrar</a>
+                    <a id="btn btn-unirPelicula-actor" href="#" class="btn btn-unirPelicula">Unir a película</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="action-bar">
+        <a th:href="@{/actores/nuevo}" class="btn-nuevo" title="Añadir nuevo actor">
+            Crear Nuevo Actor
+        </a>
+    </div>
+
+    <div class="actor-container">
+        <div class="actor-card" th:each="actor : ${listadoActores}"
+             th:data-id="${actor.id}"
+             th:data-nombre="${actor.nombre}"
+             th:data-fecha="${actor.fechaNacimiento}"
+             th:data-pais="${actor.pais}"
+             onclick="mostrarDetalles(this)">
+
+            <svg viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+
+            <h4 th:text="${actor.nombre}" style="margin: 10px 0;"></h4>
+            <small style="color: #666;" th:text="${actor.pais}"></small>
+        </div>
+    </div>
+</main>
+
+<div class="pagination-container">
+    <nav th:replace="~{paginator-nav :: paginator}"></nav>
+</div>
+
+<script th:src="@{/js/scripts.js}"></script>
+<script th:src="@{/js/actores.js}"></script>
+
+</body>
+</html>

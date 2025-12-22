@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="es">
+<head>
+    <title>Cineando - Gestión de películas</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div id="sidebar" class="sidebar-busqueda">
+
+    <div class="sidebar-header">
+        <h3>Búsqueda Películas</h3>
+        <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
+    </div>
+
+    <div class="sidebar-content">
+
+        <div class="filter-group">
+            <h4>Por Identificador</h4>
+            <form th:action="@{/peliculas/id}" method="get">
+                <div class="input-row">
+                    <input type="number" id="id" name="id" placeholder="Ej: 5">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="filter-group">
+            <h4>Por Título</h4>
+            <form th:action="@{/peliculas/titulo}" method="get">
+                <div class="input-row">
+                    <input type="text" id="titulo" name="titulo" placeholder="Ej: Matrix">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="filter-group">
+            <h4>Por Género</h4>
+            <form th:action="@{/peliculas/genero}" method="get">
+                <div class="input-row">
+                    <input type="text" id="genero" name="genero" placeholder="Ej: Ciencia Ficción">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="filter-group">
+            <h4>Por Actor</h4>
+            <form th:action="@{/peliculas/actor}" method="get">
+                <div class="input-row">
+                    <input type="number" id="actor" name="actor" placeholder="Ej: 1">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+    <header th:replace="~{encabezado :: headerPrincipal('peliculas')}"></header>
+
+<main>
+
+    <div th:if="${mensajeGuardado != null}" class="alerta alerta-guardado">
+        <span th:text="${mensajeGuardado}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div th:if="${mensajeActualizado != null}" class="alerta alerta-actualizado">
+        <span th:text="${mensajeActualizado}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div th:if="${mensajeFiltro != null}" class="alerta alerta-filtro">
+        <strong>ℹ️ Filtro:</strong> <span th:text="${mensajeFiltro}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div th:if="${mensajeBorrado != null}" class="alerta alerta-borrado">
+        <span th:text="${mensajeBorrado}"></span>
+        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <section id="detalle-destacado">
+        <div id="mensaje-vacio">
+            <h2>Haz clic en una tarjeta de abajo para ver la información detallada aquí.</h2>
+        </div>
+
+        <div id="contenido-detalle">
+            <div class="detalle-img-container">
+                <img id="det-img" src="" alt="">
+                <div id="det-img-placeholder" class="placeholder-img" style="display:none;"></div>
+            </div>
+            <div class="detalle-info">
+                <h2 id="det-titulo"></h2>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #888;">ID de referencia: #<span id="det-id"></span></p>
+                <p><strong>Año:</strong> <span id="det-anio"></span></p>
+                <p><strong>Duración:</strong> <span id="det-duracion"></span></p>
+                <p><strong>País:</strong> <span id="det-pais"></span></p>
+                <p><strong>Género:</strong> <span id="det-genero"></span></p>
+                <p><strong>Dirección:</strong> <span id="det-direccion"></span></p>
+
+                <div class="sinopsis-box">
+                    <p><strong>Sinopsis:</strong></p>
+                    <p id="det-sinopsis"></p>
+                </div>
+
+                <div class="detalle-acciones">
+                    <a id="btn-editar-detalle" href="#" class="btn btn-editar">Editar</a>
+                    <a id="btn-borrar-detalle" href="#" class="btn btn-borrar"
+                       onclick="return confirm('¿Estás seguro de que deseas eliminar esta película?')">Borrar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="action-bar">
+        <a th:href="@{/peliculas/nuevo}" class="btn-nuevo" title="Añadir nueva película">
+            Crear Nueva Película
+        </a>
+    </div>
+
+    <div class="movie-container">
+        <div class="movie-card" th:each="pelicula : ${listadoPeliculas}"
+             th:data-id="${pelicula.id}"
+             th:data-titulo="${pelicula.titulo}"
+             th:data-anio="${pelicula.año}"
+             th:data-duracion="${pelicula.duracion}"
+             th:data-pais="${pelicula.pais}"
+             th:data-genero="${pelicula.genero}"
+             th:data-direccion="${pelicula.direccion}"
+             th:data-sinopsis="${pelicula.sinopsis}"
+             th:data-imagen="${pelicula.imagen}"
+             onclick="mostrarDetalles(this)">
+
+            <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
+                 th:src="${pelicula.imagen}" alt="Cartel">
+
+            <div th:unless="${pelicula.imagen != null and pelicula.imagen != ''}"
+                 class="placeholder-img"></div>
+
+            <h4 th:text="${pelicula.titulo}" style="margin: 10px 0;"></h4>
+            <small th:text="${pelicula.año}"></small>
+        </div>
+    </div>
+</main>
+
+
+<div class="pagination-container">
+    <nav th:replace="~{paginator-nav :: paginator}"></nav>
+</div>
+
+<script th:src="@{/js/scripts.js}"></script>
+<script th:src="@{/js/peliculas.js}"></script>
+
+</body>
+</html>

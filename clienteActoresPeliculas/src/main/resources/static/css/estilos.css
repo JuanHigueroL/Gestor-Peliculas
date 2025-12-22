@@ -1,0 +1,791 @@
+/* ==========================================================================
+   1. ESTILOS GLOBALES Y VARIABLES (Base para toda la web)
+   ========================================================================== */
+
+/* DEFINICIÓN DE VARIABLES Y MODO OSCURO */
+:root {
+    color-scheme: light dark;
+    /* --- MODO CLARO (Por defecto) --- */
+    --bg-body: #f4f4f4;           /* Fondo principal */
+    --bg-tarjeta: #ffffff;        /* Fondo de tarjetas, sidebar y formularios */
+    --bg-input: #f2f2f2;          /* Fondo de inputs */
+    --bg-input-focus: #ffffff;    /* Fondo input al escribir */
+
+    --color-texto: #333333;       /* Texto principal */
+    --color-texto-sec: #555555;   /* Texto secundario (labels, descripciones) */
+    --color-header: #333333;      /* Color de fondo del Header */
+    --color-blanco: #ffffff;      /* Texto que siempre debe ser blanco (en header/botones) */
+
+    --borde-color: #cccccc;       /* Color de bordes */
+    --sombra: rgba(0,0,0,0.1);    /* Sombra suave */
+    --sombra-hover: rgba(0,0,0,0.2);
+
+    /* Botones (Colores de acento) */
+    --btn-amarillo-bg: #f7dc6f;
+    --btn-amarillo-border: #d4ac0d;
+    --btn-amarillo-hover: #f1c40f;
+
+    --btn-gris-bg: #555555;
+    --btn-gris-hover: #2c3e50;
+
+    --btn-azul: #007bff;
+    --btn-rojo: #dc3545;
+    --btn-verde: #55c990;
+}
+
+/* --- MODO OSCURO (Sobrescribe las variables anteriores) --- */
+body.dark-mode {
+    --bg-body: #121212;           /* Fondo muy oscuro */
+    --bg-tarjeta: #1e1e1e;        /* Tarjetas gris oscuro */
+    --bg-input: #2c2c2c;          /* Inputs gris medio */
+    --bg-input-focus: #3a3a3a;
+
+    --color-texto: #e0e0e0;       /* Texto casi blanco */
+    --color-texto-sec: #b0b0b0;   /* Texto secundario más claro */
+    --color-header: #000000;      /* Header negro puro */
+    --color-blanco: #e0e0e0;
+
+    --borde-color: #444444;       /* Bordes oscuros */
+    --sombra: rgba(0,0,0,0.5);    /* Sombras más fuertes para que se noten */
+
+    /* Ajuste de botones para reducir brillo */
+    --btn-gris-bg: #3a3a3a;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-body); /* Variable dinámica */
+    color: var(--color-texto);        /* Variable dinámica */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    /* Transición suave al cambiar de modo */
+    /*transition: background-color 0.3s ease, color 0.3s ease;*/
+}
+
+/* ==========================================================================
+   2. HEADER Y NAVEGACIÓN
+   ========================================================================== */
+header {
+    background-color: var(--color-header);
+    color: var(--color-blanco);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 2px 5px var(--sombra);
+}
+
+.center-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-center h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+header h1 {
+    margin: 0;
+    font-weight: normal;
+}
+
+.main-title {
+    text-decoration: none;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.sub-nav {
+    margin-top: 10px;
+}
+
+.sub-nav a {
+    color: #999; /* Gris medio, se ve bien en ambos headers oscuros */
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+.sub-nav a:hover, .sub-nav a.active {
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Iconos del Header */
+.icon, .settings-icon, .btn-ajustes svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.search-box {
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.search-box:hover {
+    transform: scale(1.1);
+}
+
+.settings-icon:hover, .btn-ajustes:hover svg {
+    transform: rotate(45deg);
+}
+
+.btn-ajustes {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-left, .header-right {
+    width: 40px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/* ==========================================================================
+   3. BARRAS LATERALES (SIDEBARS)
+   ========================================================================== */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.5);
+    z-index: 998;
+    transition: width 0s 0.4s;
+}
+
+.overlay.activo {
+    width: 100%;
+    transition: width 0s;
+}
+
+/* Configuración común para ambos sidebars */
+.sidebar-busqueda, .sidebar-ajustes {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    background-color: var(--bg-tarjeta); /* Adaptable a modo oscuro */
+    z-index: 999;
+    transition: 0.4s ease;
+    display: flex; flex-direction: column;
+    color: var(--color-texto);
+}
+
+/* Sidebar Izquierda (Búsqueda) */
+.sidebar-busqueda {
+    left: -350px;
+    width: 350px;
+    box-shadow: 4px 0 15px var(--sombra);
+    transition: left 0.4s ease;
+}
+
+.sidebar-busqueda.activo {
+    left: 0;
+}
+
+/* Sidebar Derecha (Ajustes) */
+.sidebar-ajustes {
+    right: -350px;
+    width: 350px;
+    box-shadow: -4px 0 15px var(--sombra);
+    transition: right 0.4s ease;
+}
+.sidebar-ajustes.activo {
+    right: 0;
+}
+
+.sidebar-header {
+    background-color: var(--color-header);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #555;
+    font-size: 1.3em;
+}
+
+.btn-cerrar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.btn-cerrar:hover {
+    color: #ccc;
+}
+
+.sidebar-content {
+    padding: 20px;
+    color: var(--color-texto-sec);
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Filtros dentro del sidebar */
+.filter-group {
+    margin-bottom: 25px;
+}
+
+.filter-group h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--color-texto);
+    font-weight: bold;
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-row input {
+    flex-grow: 1;
+    width: auto;
+    background-color: var(--bg-input); /* Adaptable */
+    color: var(--color-texto);
+    border: 1px solid var(--borde-color);
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input-row input:focus {
+    background-color: var(--bg-input-focus);
+    border-color: #999;
+}
+
+/* Menú de Ajustes */
+.ajustes-menu { list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ajustes-menu li {
+    border-bottom: 1px solid var(--borde-color);
+}
+
+.ajustes-menu a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: var(--color-texto);
+    font-size: 1.1em;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ajustes-menu a:hover {
+    background-color: var(--bg-input); /* Efecto hover adaptable */
+    color: var(--btn-azul);
+}
+
+/* ==========================================================================
+   4. BOTONES Y ACCIONES
+   ========================================================================== */
+.btn-guardar {
+    background-color: var(--btn-amarillo-bg);
+    color: #2c3e50; /* Este color fijo está bien porque el botón es siempre amarillo */
+    border: 2px solid var(--btn-amarillo-border);
+    display: block;
+    margin: 20px auto;
+    width: fit-content;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    box-shadow: 0 2px 5px var(--sombra);
+    transition: all 0.2s ease;
+}
+.btn-guardar:hover {
+    background-color: var(--btn-amarillo-hover);
+    border-color: #b7950b;
+    color: #1a252f;
+}
+
+.btn-nuevo {
+    background-color: var(--btn-gris-bg);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 2px 5px var(--sombra);
+    transition: transform 0.2s, background-color 0.2s;
+    display: inline-block;
+}
+
+.btn-nuevo:hover {
+    background-color: var(--btn-gris-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px var(--sombra-hover);
+}
+
+.btn-volver-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.btn-volver {
+    background-color: var(--btn-gris-bg);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 2px 5px var(--sombra);
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-volver:hover {
+    background-color: var(--btn-gris-hover);
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.btn:hover {
+    opacity: 0.8;
+}
+
+.btn-editar {
+    background-color: var(--btn-azul);
+}
+
+.btn-borrar {
+    background-color: var(--btn-rojo);
+}
+
+.btn-unirPelicula {
+    background-color: var(--btn-verde);
+}
+
+.btn-search {
+    background-color: var(--btn-gris-bg);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    white-space: nowrap;
+    transition: background 0.3s;
+}
+.btn-search:hover {
+    background-color: var(--btn-gris-hover);
+}
+
+.action-bar {
+    max-width: 1200px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* ==========================================================================
+   5. FORMULARIOS Y TARJETAS
+   ========================================================================== */
+.form-container, .main-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.form-card {
+    background-color: var(--bg-tarjeta); /* Adaptable */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px var(--sombra);
+    width: 100%;
+    max-width: 600px;
+    border-top: 5px solid #34495e;
+    text-align: center;
+    color: var(--color-texto);
+    transition: background-color 0.3s;
+}
+
+.form-card h2 {
+    margin-top: 0;
+    color: var(--color-texto);
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--borde-color);
+    padding-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label { display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--color-texto-sec);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--borde-color);
+    background-color: var(--bg-input); /* Adaptable */
+    color: var(--color-texto); /* Adaptable */
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: var(--bg-input-focus);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+
+/* ==========================================================================
+   6. MENSAJES DE ALERTA
+   ========================================================================== */
+.alerta {
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 5px;
+    max-width: 800px;
+    text-align: center;
+    position: relative;
+    font-weight: 500;
+    box-shadow: 0 2px 5px var(--sombra);
+}
+
+/* Mantenemos los colores fijos para alertas porque necesitan contraste específico */
+.alerta-exito, .alerta-guardado {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alerta-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alerta-actualizado {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.alerta-borrado {
+    background-color: #ffb4b4;
+    color: #970202;
+    border: 1px solid #fd9898;
+}
+
+.alerta-filtro {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+    text-align: left;
+}
+
+.field-error {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.cerrar-alerta {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    opacity: 0.6;
+}
+
+.cerrar-alerta:hover {
+    opacity: 1;
+}
+
+.info-text {
+    color: var(--color-texto-sec);
+    margin-bottom: 25px;
+    font-size: 1.1em;
+    background-color: var(--bg-input);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+
+/* ==========================================================================
+   7. LISTADOS Y DETALLES
+   ========================================================================== */
+#detalle-destacado {
+    background-color: var(--bg-tarjeta); /* Adaptable */
+    border: 2px solid var(--color-header);
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 1000px; padding: 20px;
+    box-shadow: 0 4px 10px var(--sombra);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--color-texto);
+}
+
+#mensaje-vacio {
+    text-align: center;
+    width: 100%;
+    color: var(--color-texto-sec);
+}
+
+#mensaje-vacio h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+#contenido-detalle {
+    display: none;
+    width: 100%;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.detalle-img-container {
+    flex: 0 0 200px;
+    text-align: center;
+}
+
+.detalle-img-container img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--sombra);
+    display: block;
+}
+
+.default-user-icon {
+    width: 100%;
+    max-width: 150px;
+    fill: #ccc;
+}
+
+.detalle-info {
+    flex: 1;
+}
+
+.detalle-info h2 {
+    margin-top: 0;
+    color: var(--color-texto);
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.detalle-info p {
+    font-size: 1.1em;
+    line-height: 1.4;
+    color: var(--color-texto-sec);
+    margin: 8px 0;
+}
+
+.sinopsis-box {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--borde-color);
+    font-style: italic;
+    color: var(--color-texto-sec);
+}
+
+.detalle-acciones {
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid var(--borde-color);
+}
+
+.movie-container, .actor-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.movie-card, .actor-card {
+    background: var(--bg-tarjeta); /* Adaptable */
+    border: 1px solid var(--borde-color);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px var(--sombra);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+    color: var(--color-texto);
+}
+
+.movie-card:hover, .actor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px var(--sombra-hover);
+    border-color: #888;
+}
+
+.movie-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.actor-card svg {
+    width: 100px;
+    height: 100px;
+    fill: #555;
+    margin-bottom: 15px;
+    background-color: var(--bg-input);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.placeholder-img {
+    width: 100%;
+    height: 250px;
+    background-color: var(--bg-input);
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   8. PAGINACIÓN
+   ========================================================================== */
+.pagination-container {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    gap: 5px;
+}
+
+.page-link {
+    display: inline-block;
+    padding: 8px 14px;
+    text-decoration: none;
+    color: var(--color-texto); /* Texto adaptable */
+    background-color: var(--bg-tarjeta); /* Fondo adaptable */
+    border: 1px solid var(--borde-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    font-family: sans-serif;
+}
+
+.page-link:hover {
+    background-color: var(--bg-input);
+    color: var(--color-texto);
+    border-color: var(--borde-color);
+    cursor: pointer;
+}
+
+/* Página Actual (Activa) */
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #2c3e50; /* Azul oscuro fijo para contraste */
+    border-color: #2c3e50;
+    font-weight: bold;
+}
+
+/* Botones Deshabilitados */
+.page-item.disabled .page-link {
+    color: #999;
+    pointer-events: none;
+    background-color: var(--bg-input);
+    border-color: var(--borde-color);
+    opacity: 0.6;
+}
