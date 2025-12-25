@@ -147,13 +147,17 @@
         </div>
     </section>
 
+    <!-- Barra de acción para crear una nueva película -->
     <div class="action-bar">
         <a th:href="@{/peliculas/nuevo}" class="btn-nuevo" title="Añadir nueva película">
             Crear Nueva Película
         </a>
     </div>
 
+    <!-- Contenedor de las tarjetas de las películas -->
     <div class="movie-container">
+        <!-- Bucle que recorre el listado de películas -->
+        <!-- Se añaden atributos data- para almacenar la información de cada película y no se pierda-->
         <div class="movie-card" th:each="pelicula : ${listadoPeliculas}"
              th:data-id="${pelicula.id}"
              th:data-titulo="${pelicula.titulo}"
@@ -164,8 +168,9 @@
              th:data-direccion="${pelicula.direccion}"
              th:data-sinopsis="${pelicula.sinopsis}"
              th:data-imagen="${pelicula.imagen}"
-             onclick="mostrarDetalles(this)">
+             onclick="mostrarDetalles(this)"> <!-- Al hacer clic en la tarjeta, se muestra el detalle de estos datos -->
 
+            <!-- Se muestra la imagen y en su defecto un placeholder, el título y año de la misma -->
             <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
                  th:src="${pelicula.imagen}" alt="Cartel">
 
@@ -178,7 +183,7 @@
     </div>
 </main>
 
-
+<!-- Paginación -->
 <div class="pagination-container">
     <nav th:replace="~{paginator-nav :: paginator}"></nav>
 </div>
