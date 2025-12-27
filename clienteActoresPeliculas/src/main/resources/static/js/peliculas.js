@@ -3,15 +3,9 @@
    ========================================= */
 
 function mostrarDetalles(elemento) {
-    // 1. Obtener datos del dataset
+    // Obtener datos del dataset
     const data = elemento.dataset;
-
-    // 2. Mostrar contenedor y ocultar mensaje vacío
-    document.getElementById('mensaje-vacio').style.display = 'none';
-    const contenido = document.getElementById('contenido-detalle');
-    contenido.style.display = 'flex';
-
-    // 3. Rellenar textos
+    // Rellenar textos
     document.getElementById('det-id').innerText = data.id;
     document.getElementById('det-titulo').innerText = data.titulo;
     document.getElementById('det-anio').innerText = data.anio;
@@ -20,12 +14,10 @@ function mostrarDetalles(elemento) {
     document.getElementById('det-genero').innerText = data.genero;
     document.getElementById('det-direccion').innerText = data.direccion;
     document.getElementById('det-sinopsis').innerText = data.sinopsis;
-
-    // 4. Actualizar botones de acción
+    // Actualizar botones de editar y borrar
     document.getElementById('btn-editar-detalle').href = '/peliculas/editar/' + data.id;
     document.getElementById('btn-borrar-detalle').href = '/peliculas/borrar/' + data.id;
-
-    // 5. Gestión de la imagen
+    // Gestión de la imagen
     const imgElement = document.getElementById('det-img');
     const placeholderElement = document.getElementById('det-img-placeholder');
 
@@ -37,6 +29,10 @@ function mostrarDetalles(elemento) {
         imgElement.style.display = 'none';
         placeholderElement.style.display = 'block';
     }
+
+    // Mostrar contenedor y ocultar mensaje vacío
+    document.getElementById('mensaje-vacio').style.display = 'none';
+    document.getElementById('contenido-detalle').style.display = 'flex';
 
     // 6. Scroll suave hacia el detalle
     document.getElementById('detalle-destacado').scrollIntoView({ behavior: 'smooth' });
