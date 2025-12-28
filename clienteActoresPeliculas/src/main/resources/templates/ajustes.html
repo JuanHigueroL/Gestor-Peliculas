@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-
+<!-- Overlay para cerrar sidebars al hacer clic fuera de ellos.
+     Cómo los ajustes están en todas las páginas se añade el overlay aquí -->
 <div id="overlay" class="overlay" onclick="closeAllSidebars()"></div>
 
 <div id="sidebar-ajustes" class="sidebar-ajustes">
@@ -12,7 +13,7 @@
     <div class="sidebar-content">
         <ul class="ajustes-menu">
             <li>
-                <a href="#" id="btnModoOscuro" onclick="toggleDarkMode(event)">
+                <div id="btnModoOscuro" onclick="toggleDarkMode()">
                         <svg id="icono-luna" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
@@ -28,7 +29,7 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                     <span id="textoModo">Modo Oscuro</span>
-                </a>
+                </div>
             </li>
         </ul>
     </div>

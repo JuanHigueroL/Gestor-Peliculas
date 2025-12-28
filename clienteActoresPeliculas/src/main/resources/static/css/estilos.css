@@ -297,7 +297,7 @@ header h1 {
     border-bottom: 1px solid var(--borde-color);
 }
 
-.ajustes-menu a {
+.ajustes-menu div {
     display: block;
     padding: 15px 20px;
     text-decoration: none;
@@ -309,7 +309,7 @@ header h1 {
     gap: 10px;
 }
 
-.ajustes-menu a:hover {
+.ajustes-menu div:hover {
     background-color: var(--bg-input); /* Efecto hover adaptable */
     color: var(--btn-azul);
 }
