@@ -96,8 +96,9 @@ public class ActorController {
 
     @GetMapping("/borrar/{id}")
     public String eliminarActor(Model model, @PathVariable("id") Integer id, RedirectAttributes attributes) {
+        String nombreActor = actorService.buscarActorPorId(id).getNombre();
         actorService.eliminarActor(id);
-        attributes.addFlashAttribute("mensajeBorrado", "Los datos del actor fueron borrados!");
+        attributes.addFlashAttribute("mensajeBorrado", "Los datos del actor con id '"+id+"' y nombre '"+nombreActor+ "' fueron borrados!");
         return "redirect:/actores";
     }
 
@@ -121,7 +122,7 @@ public class ActorController {
             String nombreActor = actor.getNombre();
             Pelicula pelicula = peliculaService.buscarPeliculaPorId(id2);
             String tituloPelicula = pelicula.getTitulo();
-            attributes.addFlashAttribute("mensajeExito", "Se ha apuntado al actor con nombre '"+ nombreActor+ "' en la película '"+"'");
+            attributes.addFlashAttribute("mensajeExito", "Se ha apuntado al actor con nombre '"+ nombreActor+ "' en la película '"+ tituloPelicula+ "'");
         }
         return "redirect:/actores";
     }

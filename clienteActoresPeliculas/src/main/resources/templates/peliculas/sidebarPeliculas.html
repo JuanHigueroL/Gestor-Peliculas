@@ -1,0 +1,57 @@
+<div id="sidebar" class="sidebar-busqueda">
+
+    <!-- Header del sidebar con título y botón de cierre -->
+    <div class="sidebar-header">
+        <h3>Búsqueda Películas</h3>
+        <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
+    </div>
+
+    <!-- Contenido del sidebar con formularios de búsqueda -->
+    <div class="sidebar-content">
+
+        <!-- Filtro por identificador-->
+        <div class="filter-group">
+            <h4>Por Identificador</h4>
+            <form th:action="@{/peliculas/id}" method="get">
+                <div class="input-row">
+                    <input type="number" id="id" name="id" placeholder="Ej: 5">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Filtro por título-->
+        <div class="filter-group">
+            <h4>Por Título</h4>
+            <form th:action="@{/peliculas/titulo}" method="get">
+                <div class="input-row">
+                    <input type="text" id="titulo" name="titulo" placeholder="Ej: Matrix">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Filtro por género-->
+        <div class="filter-group">
+            <h4>Por Género</h4>
+            <form th:action="@{/peliculas/genero}" method="get">
+                <div class="input-row">
+                    <input type="text" id="genero" name="genero" placeholder="Ej: Ciencia Ficción">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Filtro por el id del actor-->
+        <div class="filter-group">
+            <h4>Por Actor</h4>
+            <form th:action="@{/peliculas/actor}" method="get">
+                <div class="input-row">
+                    <input type="number" id="actor" name="actor" placeholder="Ej: 1">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

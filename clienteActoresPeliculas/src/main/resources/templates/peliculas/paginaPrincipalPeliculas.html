@@ -6,106 +6,17 @@
 </head>
 <body>
 
-<!--
-    El sidebar se crea en el propio HTML para facilitar su personalización. Películas y Actores
-    comparten la misma estructura básica, pero cada uno tiene sus propios filtros específicos.
+<!-- Sidebar de búsqueda de películas -->
+<div th:replace="~{peliculas/sidebarPeliculas}"></div>
 
-    Sidebar de búsqueda para películas, se le añade el id "sidebar" y la clase "sidebar-busqueda".
-    El id se usa para controlar su visibilidad mediante JavaScript.
-    La clase se usa para aplicar estilos específicos de búsqueda de películas.
-    Este sidebar se encuentra oculto por defecto y se muestra al hacer clic en el icono de la lupa en el header.
--->
-<div id="sidebar" class="sidebar-busqueda">
-
-    <!-- Header del sidebar con título y botón de cierre -->
-    <div class="sidebar-header">
-        <h3>Búsqueda Películas</h3>
-        <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
-    </div>
-
-    <!-- Contenido del sidebar con formularios de búsqueda -->
-    <div class="sidebar-content">
-
-        <!-- Filtro por identificador-->
-        <div class="filter-group">
-            <h4>Por Identificador</h4>
-            <form th:action="@{/peliculas/id}" method="get">
-                <div class="input-row">
-                    <input type="number" id="id" name="id" placeholder="Ej: 5">
-                    <button type="submit" class="btn-search">Buscar</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Filtro por título-->
-        <div class="filter-group">
-            <h4>Por Título</h4>
-            <form th:action="@{/peliculas/titulo}" method="get">
-                <div class="input-row">
-                    <input type="text" id="titulo" name="titulo" placeholder="Ej: Matrix">
-                    <button type="submit" class="btn-search">Buscar</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Filtro por género-->
-        <div class="filter-group">
-            <h4>Por Género</h4>
-            <form th:action="@{/peliculas/genero}" method="get">
-                <div class="input-row">
-                    <input type="text" id="genero" name="genero" placeholder="Ej: Ciencia Ficción">
-                    <button type="submit" class="btn-search">Buscar</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Filtro por el id del actor-->
-        <div class="filter-group">
-            <h4>Por Actor</h4>
-            <form th:action="@{/peliculas/actor}" method="get">
-                <div class="input-row">
-                    <input type="number" id="actor" name="actor" placeholder="Ej: 1">
-                    <button type="submit" class="btn-search">Buscar</button>
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
-
-    <!-- Header principal de películas y actores, se indica 'peliculas' para resaltar la sección correcta en el header -->
-    <header th:replace="~{encabezado :: headerPrincipal('peliculas')}"></header>
+<!-- Header principal de películas y actores, se indica 'peliculas' para resaltar la sección correcta en el header -->
+<header th:replace="~{encabezado :: headerPrincipal('peliculas')}"></header>
 
 <!-- Main (contenido principal de la página) con alertas, sección de detalle destacado, botón de nueva película y listado de películas -->
 <main>
 
-    <!-- Alertas de éxito, error, guardado, actualizado, filtro y borrado -->
-    <!-- Se hace uso de attributes y flash attributes para mostrar los mensajes correspondientes -->
-
-    <!-- Alerta de éxito, aparece cuando se guarda una película-->
-    <div th:if="${mensajeGuardado != null}" class="alerta alerta-guardado">
-        <span th:text="${mensajeGuardado}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
-
-    <!-- Alerta de actualización, aparece cuando una película es actualizada-->
-    <div th:if="${mensajeActualizado != null}" class="alerta alerta-actualizado">
-        <span th:text="${mensajeActualizado}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
-
-    <!-- Alerta de filtro, aparece cuando se aplica un filtro de búsqueda-->
-    <!-- El mensaje cambia según el filtro aplicado -->
-    <div th:if="${mensajeFiltro != null}" class="alerta alerta-filtro">
-        <strong>ℹ️ Filtro:</strong> <span th:text="${mensajeFiltro}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
-
-    <!-- Alerta de borrado, aparece cuando se elimina una película-->
-    <div th:if="${mensajeBorrado != null}" class="alerta alerta-borrado">
-        <span th:text="${mensajeBorrado}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
+    <!-- Sección de mensajes de alerta (éxito o error) -->
+    <div th:replace="~{peliculas/mensajesAlertaPeliculas}"></div>
 
     <!-- Sección de detalle destacado, muestra la información detallada de la película seleccionada -->
     <section id="detalle-destacado">

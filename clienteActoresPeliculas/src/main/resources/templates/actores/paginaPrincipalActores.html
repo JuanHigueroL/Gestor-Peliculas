@@ -7,59 +7,13 @@
 </head>
 <body>
 
-<div id="sidebar" class="sidebar-busqueda">
-
-    <div class="sidebar-header">
-        <h3>Búsqueda Actores</h3>
-        <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
-    </div>
-
-    <div class="sidebar-content">
-        <div class="filter-group">
-            <h4>Por Identificador</h4>
-            <form th:action="@{/actores/id}" method="get">
-                <div class="input-row">
-                    <input type="number" id="id" name="id" placeholder="Ej: 5">
-                    <button type="submit" class="btn-search">Buscar</button>
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
+<div th:replace="~{actores/sidebarActores}"></div>
 
 <header th:replace="~{encabezado :: headerPrincipal('actores')}"></header>
 
 <main>
-    <div th:if="${mensajeExito != null}" class="alerta alerta-exito">
-        <span th:text="${mensajeExito}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
 
-    <div th:if="${mensajeError != null}" class="alerta alerta-error">
-        <span th:text="${mensajeError}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
-
-    <div th:if="${mensajeGuardado != null}" class="alerta alerta-guardado">
-        <span th:text="${mensajeGuardado}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
-
-    <div th:if="${mensajeActualizado != null}" class="alerta alerta-actualizado">
-        <span th:text="${mensajeActualizado}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
-
-    <div th:if="${mensajeFiltro != null}" class="alerta alerta-filtro">
-        <strong>ℹ️ Filtro:</strong> <span th:text="${mensajeFiltro}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
-
-    <div th:if="${mensajeBorrado != null}" class="alerta alerta-borrado">
-        <span th:text="${mensajeBorrado}"></span>
-        <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
+    <div th:replace="~{actores/mensajesAlertaActores}"></div>
 
     <section id="detalle-destacado">
         <div id="mensaje-vacio">

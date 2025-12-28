@@ -1,0 +1,20 @@
+<div id="sidebar" class="sidebar-busqueda">
+
+    <div class="sidebar-header">
+        <h3>Búsqueda Actores</h3>
+        <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
+    </div>
+
+    <div class="sidebar-content">
+        <div class="filter-group">
+            <h4>Por Identificador</h4>
+            <form th:action="@{/actores/id}" method="get">
+                <div class="input-row">
+                    <input type="number" id="id" name="id" placeholder="Ej: 5">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
