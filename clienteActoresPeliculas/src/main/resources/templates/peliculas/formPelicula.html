@@ -32,58 +32,77 @@
 
         <form th:action="@{/peliculas/guardar}" method="post" th:object="${pelicula}">
 
-            <div th:if="${#fields.hasErrors('*')}" class='alert-error'>
-                <strong>Por favor corrija los siguientes errores:</strong>
-                <ul>
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
-                </ul>
-            </div>
-
             <div class="form-group">
                 <label for="titulo">Título</label>
-                <input type="text" th:field="*{titulo}" id="titulo" required>
-                <span th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="field-error"></span>
+                <input type="text"
+                       th:field="*{titulo}"
+                       id="titulo"
+                       oninput="if(this.value.length > 150) this.value = this.value.slice(0, 150);" required>
             </div>
 
             <div style="display: flex; gap: 20px;">
                 <div class="form-group" style="flex: 1;">
                     <label for="año">Año</label>
-                    <input type="number" th:field="*{año}" id="año" required>
+                    <input type="number"
+                           th:field="*{año}"
+                           id="año"
+                           min="1901"
+                           th:max="${T(java.time.Year).now().getValue()}"
+                           oninput="if(this.value.length > 4) this.value = this.value.slice(0, 4);"
+                           placeholder="YYYY"
+                           class="form-control" required>
                 </div>
+
                 <div class="form-group" style="flex: 1;">
                     <label for="duracion">Duración (min)</label>
-                    <input type="number" th:field="*{duracion}" id="duracion" required>
+                    <input type="number"
+                           th:field="*{duracion}"
+                           id="duracion"
+                           oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="pais">País</label>
-                <input type="text" th:field="*{pais}" id="pais">
+                <input type="text"
+                       th:field="*{pais}"
+                       id="pais"
+                       oninput="if(this.value.length > 45) this.value = this.value.slice(0, 45);" required>
             </div>
 
             <div class="form-group">
                 <label for="direccion">Dirección</label>
-                <input type="text" th:field="*{direccion}" id="direccion">
+                <input type="text"
+                       th:field="*{direccion}"
+                       id="direccion"
+                       oninput="if(this.value.length > 100) this.value = this.value.slice(0, 100);" required>
             </div>
 
             <div class="form-group">
                 <label for="genero">Género</label>
-                <input type="text" th:field="*{genero}" id="genero">
+                <input type="text"
+                       th:field="*{genero}"
+                       id="genero"
+                       oninput="if(this.value.length > 45) this.value = this.value.slice(0, 45);" required>
             </div>
 
             <div class="form-group">
                 <label for="imagen">URL de la Imagen (Portada)</label>
-                <input type="url" th:field="*{imagen}" id="imagen"
-                       placeholder="https://...">
+                <input type="url"
+                       th:field="*{imagen}"
+                       id="imagen"
+                       placeholder="https://..."
+                       required>
             </div>
 
             <div class="form-group">
                 <label for="sinopsis">Sinopsis</label>
-                <textarea th:field="*{sinopsis}" id="sinopsis"
-                          placeholder="Breve resumen de la trama..."></textarea>
+                <textarea th:field="*{sinopsis}"
+                          id="sinopsis"
+                          placeholder="Escribe aquí el resumen de la película..."></textarea>
             </div>
 
-            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{id}"/>
 
             <button type="submit" class="btn-guardar">Guardar Película</button>
 
