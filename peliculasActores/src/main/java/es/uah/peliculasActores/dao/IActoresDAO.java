@@ -11,6 +11,10 @@ public interface IActoresDAO {
 
     Actor buscarActorPorId(Integer idActor);
 
+    List<Actor> buscarActoresPorNombre(String nombre);
+
+    List<Actor> buscarActoresPorPais(String pais);
+
     void guardarActualizarActor(Actor actor);
 
     void eliminarActor(Integer idActor);

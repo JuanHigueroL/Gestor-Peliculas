@@ -33,6 +33,17 @@ public class ActoresController{
         return iActoresService.buscarActorPorId(idActor);
     }
 
+    //Cuando realiza un get con la URL "/actores/nombre/(nombre del actor)" llama a la función buscarActoresPorNombre de Service, enviándole el nombre de la URL como variable
+    @GetMapping("/actores/nombre/{nombre}")
+    public List<Actor> buscarActoresPorNombre(@PathVariable String nombre) {
+        return  iActoresService.buscarActoresPorNombre(nombre);
+    }
+
+    @GetMapping("/actores/pais/{pais}")
+    public List<Actor> buscarActoresPorPais(@PathVariable String pais) {
+        return  iActoresService.buscarActoresPorPais(pais);
+    }
+
     //Cuando realiza un post con la URL "/actores" llama a la función guardarActor, enviándole el JSON como un Actor
     @PostMapping("/actores")
     public void guardarActor(@RequestBody Actor actor) {

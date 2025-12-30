@@ -35,6 +35,18 @@ public class ActorServiceImpl implements IActorService {
     }
 
     @Override
+    public Page<Actor> buscarActoresPorNombre(String nombre, Pageable pageable) {
+        List<Actor> lista = actorClient.buscarActoresPorNombre(nombre);
+        return toPage(lista, pageable);
+    }
+
+    @Override
+    public Page<Actor> buscarActoresPorPais(String pais, Pageable pageable) {
+        List<Actor> lista = actorClient.buscarActoresPorPais(pais);
+        return toPage(lista, pageable);
+    }
+
+    @Override
     public void guardarActor(Actor actor) {
         actorClient.guardarActor(actor);
     }

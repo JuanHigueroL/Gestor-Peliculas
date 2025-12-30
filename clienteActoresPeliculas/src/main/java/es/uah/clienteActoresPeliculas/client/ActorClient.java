@@ -17,6 +17,12 @@ public interface ActorClient {
     @GetExchange("/{id}")
     Actor buscarActorPorId(@PathVariable("id")Integer idActor);
 
+    @GetExchange("/nombre/{nombre}")
+    List<Actor> buscarActoresPorNombre(@PathVariable String nombre);
+
+    @GetExchange("/pais/{pais}")
+    List<Actor> buscarActoresPorPais(@PathVariable String pais);
+
     @PostExchange
     void guardarActor(@RequestBody Actor actor);
 

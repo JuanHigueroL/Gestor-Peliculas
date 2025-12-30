@@ -12,6 +12,10 @@ public interface IActorService {
 
     Actor buscarActorPorId(Integer idActor);
 
+    Page<Actor> buscarActoresPorNombre(String nombre, Pageable pageable);
+
+    Page<Actor> buscarActoresPorPais(String pais, Pageable pageable);
+
     void guardarActor(Actor actor);
 
     void eliminarActor(Integer idActor);

@@ -73,6 +73,40 @@ public class ActorController {
         return "actores/paginaPrincipalActores";
     }
 
+    @GetMapping("/pais")
+    public String buscarActorPorPais(@RequestParam(name="page", defaultValue="0") int page, Model model,@RequestParam(name= "pais", required = false) String pais) {
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<Actor> listado;
+        if (pais==null||pais.isEmpty()) {
+            listado = actorService.buscarTodos(pageable);
+        } else {
+            listado = actorService.buscarActoresPorPais(pais, pageable);
+        }
+        PageRender<Actor> pageRender =new PageRender<Actor>("/actores/pais?pais=%s".formatted(pais), listado);
+        model.addAttribute("mensajeFiltro", "Se han filtrado los actores por el país '"+ pais+ "'");
+        model.addAttribute("titulo", "Búsqueda de actores por país");
+        model.addAttribute("listadoActores", listado);
+        model.addAttribute("page", pageRender);
+        return "actores/paginaPrincipalActores";
+    }
+
+    @GetMapping("/nombre")
+    public String buscarActorPorNombre(@RequestParam(name="page", defaultValue="0") int page, Model model,@RequestParam(name= "nombre", required = false) String nombre) {
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<Actor> listado;
+        if (nombre==null||nombre.isEmpty()) {
+            listado = actorService.buscarTodos(pageable);
+        } else {
+            listado = actorService.buscarActoresPorNombre(nombre, pageable);
+        }
+        PageRender<Actor> pageRender =new PageRender<Actor>("/actores/nombre?nombre=%s".formatted(nombre), listado);
+        model.addAttribute("mensajeFiltro", "Se han filtrado los actores por el nombre '"+ nombre+ "'");
+        model.addAttribute("titulo", "Búsqueda de actores por nombre");
+        model.addAttribute("listadoActores", listado);
+        model.addAttribute("page", pageRender);
+        return "actores/paginaPrincipalActores";
+    }
+
 
     @PostMapping("/guardar")
     public String guardarActor(Model model, Actor actor, RedirectAttributes attributes) {
