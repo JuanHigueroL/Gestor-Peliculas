@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `peliculasactoresdb`.`Peliculas` (
   `idPelicula` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(150) NOT NULL,
   `año` YEAR NOT NULL,
-  `duracion` INT(11) NOT NULL,
+  `duracion` INT(5) NOT NULL,
   `pais` VARCHAR(45) NOT NULL,
   `direccion` VARCHAR(100) NOT NULL,
   `genero` VARCHAR(45) NULL,
