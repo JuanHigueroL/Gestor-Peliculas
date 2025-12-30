@@ -6,14 +6,14 @@ function mostrarDetalles(elemento) {
     // Obtener datos del dataset
     const data = elemento.dataset;
     // Rellenar textos
-    document.getElementById('det-id').innerText = data.id;
-    document.getElementById('det-titulo').innerText = data.titulo;
-    document.getElementById('det-anio').innerText = data.anio;
-    document.getElementById('det-duracion').innerText = data.duracion ? data.duracion + ' min' : '';
-    document.getElementById('det-pais').innerText = data.pais;
-    document.getElementById('det-genero').innerText = data.genero;
-    document.getElementById('det-direccion').innerText = data.direccion;
-    document.getElementById('det-sinopsis').innerText = data.sinopsis;
+    document.getElementById('det-id').innerText = data.id ? data.id : "Desconocido";
+    document.getElementById('det-titulo').innerText = data.titulo ? data.titulo : "Desconocido";
+    document.getElementById('det-anio').innerText = data.anio ? data.anio : "Desconocido";
+    document.getElementById('det-duracion').innerText = data.duracion ? data.duracion + ' min' : "Desconocida";
+    document.getElementById('det-pais').innerText = data.pais ? data.pais : "Desconocido";
+    document.getElementById('det-genero').innerText = data.genero ? data.genero : "Desconocido";
+    document.getElementById('det-direccion').innerText = data.direccion ? data.direccion : "Desconocida";
+    document.getElementById('det-sinopsis').innerText = data.sinopsis ? data.sinopsis : "No disponible";
     // Actualizar botones de editar y borrar
     document.getElementById('btn-editar-detalle').href = '/peliculas/editar/' + data.id;
     document.getElementById('btn-borrar-detalle').href = '/peliculas/borrar/' + data.id;
@@ -34,6 +34,6 @@ function mostrarDetalles(elemento) {
     document.getElementById('mensaje-vacio').style.display = 'none';
     document.getElementById('contenido-detalle').style.display = 'flex';
 
-    // 6. Scroll suave hacia el detalle
+    // Scroll suave hacia el detalle
     document.getElementById('detalle-destacado').scrollIntoView({ behavior: 'smooth' });
 }

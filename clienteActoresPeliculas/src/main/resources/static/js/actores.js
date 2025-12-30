@@ -3,37 +3,22 @@
    ========================================= */
 
 function mostrarDetalles(elemento) {
-    // 1. Obtener datos
-    const id = elemento.getAttribute('data-id');
-    const nombre = elemento.getAttribute('data-nombre');
-    const fechaRaw = elemento.getAttribute('data-fecha');
-    const pais = elemento.getAttribute('data-pais');
+    // Obtener datos del dataset
+    const data = elemento.dataset;
+    // Rellenar textos
+    document.getElementById('det-id').innerText = data.id ? data.id : "Desconocido";
+    document.getElementById('det-nombre').innerText = data.nombre ? data.nombre : "Desconocido";
+    document.getElementById('det-pais').innerText = data.pais ? data.pais : "Desconocido";
+    document.getElementById('det-fecha').innerText = data.fecha ? data.fecha : "Desconocida";
+    //Actualizar botones de editar y borrar
+    document.getElementById('btn-editar-actor').href = '/actores/editar/' + data.id;
+    document.getElementById('btn-borrar-actor').href = '/actores/borrar/' + data.id;
+    document.getElementById('btn btn-unirPelicula-actor').href ='/actores/unirPelicula/'+ data.id;
 
-    // 2. Gestionar visibilidad
-    document.getElementById('mensaje-vacio').style.display = 'none';
-    const contenido = document.getElementById('contenido-detalle');
-    contenido.style.display = 'flex';
-
-    // 3. Rellenar textos básicos
-    document.getElementById('det-id').innerText = id;
-    document.getElementById('det-nombre').innerText = nombre;
-    document.getElementById('det-pais').innerText = pais;
-
-    // 4. ACTUALIZAR LOS BOTONES CON EL ID DEL ACTOR
-    const btnEditar = document.getElementById('btn-editar-actor');
-    const btnBorrar = document.getElementById('btn-borrar-actor');
-    const btnUnirPelicula = document.getElementById('btn btn-unirPelicula-actor')
-
-    // Asumiendo rutas: /actores/editar/ID y /actores/borrar/ID
-    btnEditar.href = '/actores/editar/' + id;
-    btnBorrar.href = '/actores/borrar/' + id;
-    btnUnirPelicula.href ='/actores/unirPelicula/'+ id;
-
-    // 5. Lógica de Fecha y Edad
-    if (fechaRaw) {
-        const dateObj = new Date(fechaRaw);
-        const fechaFormateada = dateObj.toLocaleDateString();
-        document.getElementById('det-fecha').innerText = fechaFormateada;
+    // Lógica de Fecha y Edad
+    if (data.fecha) {
+        const dateObj = new Date(data.fecha);
+        document.getElementById('det-fecha').innerText = dateObj.toLocaleDateString();
 
         const hoy = new Date();
         let edad = hoy.getFullYear() - dateObj.getFullYear();
@@ -47,6 +32,11 @@ function mostrarDetalles(elemento) {
         document.getElementById('det-edad').innerText = "";
     }
 
-    // 6. Scroll
+
+    // Mostrar contenedor y ocultar mensaje vacío
+    document.getElementById('mensaje-vacio').style.display = 'none';
+    document.getElementById('contenido-detalle').style.display = 'flex';
+
+    // Scroll
     document.getElementById('detalle-destacado').scrollIntoView({ behavior: 'smooth' });
 }

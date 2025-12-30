@@ -1,11 +1,15 @@
 <div id="sidebar" class="sidebar-busqueda">
 
+    <!-- Header del sidebar con título y botón de cierre -->
     <div class="sidebar-header">
         <h3>Búsqueda Actores</h3>
         <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
     </div>
 
+    <!-- Contenido del sidebar con formularios de búsqueda -->
     <div class="sidebar-content">
+
+        <!-- Filtro por identificador-->
         <div class="filter-group">
             <h4>Por Identificador</h4>
             <form th:action="@{/actores/id}" method="get">
