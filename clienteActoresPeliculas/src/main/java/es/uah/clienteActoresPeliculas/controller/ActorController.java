@@ -28,11 +28,11 @@ public class ActorController {
     @Autowired
     IPeliculaService peliculaService;
 
-    @GetMapping(value= {"", "/"})
+    @GetMapping(value= {"", "/", "/listado"})
     public String inicio(Model model, @RequestParam(name="page", defaultValue="0") int page) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Actor> listado =actorService.buscarTodos(pageable);
-        PageRender<Actor> pageRender = new PageRender<Actor>("actores/listado", listado);
+        PageRender<Actor> pageRender = new PageRender<Actor>("/actores/listado", listado);
         model.addAttribute("titulo", "Listado de todos los actores");
         model.addAttribute("listadoActores", listado);
         model.addAttribute("page", pageRender);
@@ -65,7 +65,7 @@ public class ActorController {
                 listado = new PageImpl<>(Collections.emptyList(), pageable, 0);
             }
         }
-        PageRender<Actor> pageRender =new PageRender<Actor>("actores/id?id=%s".formatted(id), listado);
+        PageRender<Actor> pageRender =new PageRender<Actor>("/actores/id?id=%s".formatted(id), listado);
         model.addAttribute("mensajeFiltro", "Se han filtrado los actores por el id '"+ id+ "'");
         model.addAttribute("titulo", "Búsqueda de película por ID");
         model.addAttribute("listadoActores", listado);

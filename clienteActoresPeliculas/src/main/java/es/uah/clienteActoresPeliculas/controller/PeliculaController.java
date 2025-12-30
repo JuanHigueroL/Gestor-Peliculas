@@ -24,11 +24,11 @@ public class PeliculaController {
     @Autowired
     IPeliculaService peliculaService;
 
-    @GetMapping(value= {"", "/"})
+    @GetMapping(value= {"", "/", "/listado"})
     public String inicio(Model model, @RequestParam(name="page", defaultValue="0") int page) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Pelicula> listado =peliculaService.buscarTodos(pageable);
-        PageRender<Pelicula> pageRender = new PageRender<Pelicula>("peliculas/listado", listado);
+        PageRender<Pelicula> pageRender = new PageRender<Pelicula>("/peliculas/listado", listado);
         model.addAttribute("titulo", "Listado de todas las peliculas");
         model.addAttribute("listadoPeliculas", listado);
         model.addAttribute("page", pageRender);
@@ -64,7 +64,7 @@ public class PeliculaController {
                 listado = new PageImpl<>(Collections.emptyList(), pageable, 0);
             }
         }
-        PageRender<Pelicula> pageRender =new PageRender<Pelicula>("peliculas/id?id=%s".formatted(id), listado);
+        PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/id?id=%s".formatted(id), listado);
         model.addAttribute("mensajeFiltro", "Se han filtrado las películas por el id '"+ id+ "'");
         model.addAttribute("titulo", "Búsqueda de película por ID");
         model.addAttribute("listadoPeliculas", listado);
@@ -81,7 +81,7 @@ public class PeliculaController {
         } else{
             listado= peliculaService.buscarPeliculasPorTitulo(titulo, pageable);
         }
-        PageRender<Pelicula> pageRender =new PageRender<Pelicula>("peliculas/titulo?titulo=%s".formatted(titulo), listado);
+        PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/titulo?titulo=%s".formatted(titulo), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el título '"+ titulo+"'");
         model.addAttribute("titulo", "Listado de peliculas");
         model.addAttribute("listadoPeliculas", listado);
@@ -98,7 +98,7 @@ public class PeliculaController {
         } else{
             listado= peliculaService.buscarPeliculasPorGenero(genero, pageable);
         }
-        PageRender<Pelicula> pageRender =new PageRender<Pelicula>("peliculas/genero?genero=%s".formatted(genero), listado);
+        PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/genero?genero=%s".formatted(genero), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el genero '"+ genero+"'");
         model.addAttribute("titulo", "Listado de peliculas");
         model.addAttribute("listadoPeliculas", listado);
@@ -115,7 +115,7 @@ public class PeliculaController {
         } else{
             listado= peliculaService.buscarPeliculasPorActor(actor, pageable);
         }
-        PageRender<Pelicula> pageRender =new PageRender<Pelicula>("peliculas/actor?actor=%s".formatted(actor), listado);
+        PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/actor?actor=%s".formatted(actor), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el id del actor '"+ actor+"'");
         model.addAttribute("actor", "Listado de peliculas");
         model.addAttribute("listadoPeliculas", listado);
