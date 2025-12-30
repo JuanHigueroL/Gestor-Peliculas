@@ -38,5 +38,5 @@ function mostrarDetalles(elemento) {
     document.getElementById('contenido-detalle').style.display = 'flex';
 
     // Scroll
-    document.getElementById('detalle-destacado').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('contenido-detalle').scrollIntoView({ behavior: 'smooth' });
 }
