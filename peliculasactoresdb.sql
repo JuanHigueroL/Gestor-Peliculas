@@ -11,6 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 CREATE SCHEMA IF NOT EXISTS `peliculasactoresdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci ;
 USE `peliculasactoresdb`;
 
+DROP TABLE IF EXISTS `peliculasactoresdb`.`Peliculas`, `peliculasactoresdb`.`Actores`, `peliculasactoresdb`.`Peliculas_y_actores` ;
 
 -- Tabla de las películas
 CREATE TABLE IF NOT EXISTS `peliculasactoresdb`.`Peliculas` (
@@ -34,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `peliculasactoresdb`.`Actores` (
   `nombre` VARCHAR(45) NOT NULL,
   `fechaNacimiento` DATE NOT NULL,
   `pais` VARCHAR(45) NOT NULL,
+  -- `imagen` TEXT NOT NULL,
   PRIMARY KEY (`idActor`))
 ENGINE = InnoDB; 
 
@@ -42,20 +44,20 @@ ENGINE = InnoDB;
 -- Tabla intermedia de peliculas y actores
 CREATE TABLE IF NOT EXISTS `peliculasactoresdb`.`Peliculas_y_actores` (
   `Peliculas_idPelicula` INT NOT NULL,
-  `Actores_idActorPeliculas_idPelicula` INT NOT NULL,
+  `Actores_idActor` INT NOT NULL,
   PRIMARY KEY (`Peliculas_idPelicula`, `Actores_idActor`),
   -- Estos índices son puramente para optimizar la velocidad en la busqueda en JPA
-  INDEX `fk_Peliculas_y_actores_Peliculas_idx` (`Peliculas_idPelicula` ASC) VISIBLE,
-  INDEX `fk_Peliculas_y_actores_Actores_idx` (`Actores_idActor` ASC) VISIBLE,
+  INDEX `Peliculas_y_actores_Peliculas_idx` (`Peliculas_idPelicula` ASC) VISIBLE,
+  INDEX `Peliculas_y_actores_Actores_idx` (`Actores_idActor` ASC) VISIBLE,
   -- Estas 3 líneas "enlazan" la columna Pelicula_idPelicula (de esta tabla) con la columna idPelicula de la tabla Peliculas
-  CONSTRAINT `fk_Peliculas_y_actores_Peliculas_idx`
+  CONSTRAINT `fk_pya_pelicula`
     FOREIGN KEY (`Peliculas_idPelicula`)
     REFERENCES `peliculasactoresdb`.`Peliculas` (`idPelicula`)
 	-- Esto le dice a MySQL qué hacer si intentas borrar o actualizar una pelicula. Que no haga nada, se encarga el programador
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   -- Estas 3 líneas "enlazan" la columna Pelicula_idPelicula (de esta tabla) con la columna idPelicula de la tabla Peliculas
-  CONSTRAINT `fk_Peliculas_y_actores_Actores_idx`
+  CONSTRAINT `fk_pya_actor`
     FOREIGN KEY (`Actores_idActor`)
     REFERENCES `peliculasactoresdb`.`Actores` (`idActor`)
     -- Esto le dice a MySQL qué hacer si intentas borrar o actualizar un actor. Que no haga nada, se encarga el programador

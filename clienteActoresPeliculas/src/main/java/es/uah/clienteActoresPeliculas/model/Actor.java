@@ -8,12 +8,14 @@ public class Actor {
     private String nombre;
     private LocalDate fechaNacimiento;
     private String pais;
+    private String imagen;
 
-    public Actor(Integer id, String pais, LocalDate fechaNacimiento, String nombre) {
+    public Actor(Integer id, String pais, LocalDate fechaNacimiento, String nombre, String imagen) {
         this.id = id;
         this.pais = pais;
         this.fechaNacimiento = fechaNacimiento;
         this.nombre = nombre;
+        this.imagen =imagen;
     }
 
     public Actor() {}
@@ -49,4 +51,13 @@ public class Actor {
     public void setPais(String pais) {
         this.pais = pais;
     }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
 }

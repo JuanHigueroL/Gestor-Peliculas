@@ -719,7 +719,7 @@ textarea {
     border-color: #888;
 }
 
-.movie-card img {
+.movie-card img, .actor-card img {
     max-width: 100%;
     height: auto;
     border-radius: 4px;

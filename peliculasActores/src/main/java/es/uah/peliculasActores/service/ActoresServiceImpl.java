@@ -72,6 +72,7 @@ public class ActoresServiceImpl implements IActoresService {
             actorCambiado.setNombre(actor.getNombre());
             actorCambiado.setPais(actor.getPais());
             actorCambiado.setFechaNacimiento(actor.getFechaNacimiento());
+            actorCambiado.setImagen(actor.getImagen());
             actoresDAO.guardarActualizarActor(actorCambiado);
         }
     }

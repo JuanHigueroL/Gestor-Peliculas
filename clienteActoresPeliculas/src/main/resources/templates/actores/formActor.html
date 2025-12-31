@@ -58,6 +58,14 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="imagen">URL de la Imagen (Portada)</label>
+                <input type="url"
+                       th:field="*{imagen}"
+                       id="imagen"
+                       placeholder="https://...">
+            </div>
+
             <input type="hidden" th:field="*{id}"/>
 
             <button type="submit" class="btn-guardar">Guardar Actor</button>

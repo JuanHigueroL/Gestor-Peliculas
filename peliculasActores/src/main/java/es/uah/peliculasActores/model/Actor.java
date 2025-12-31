@@ -28,6 +28,9 @@ public class Actor {
     @Column(name = "pais", nullable = false, length = 45)
     private String pais;
 
+    @Column(name = "imagen", nullable = false)
+    private String imagen;
+
     // Carga todos los datos de golpe ahora mismo
     // Usar EAGER es útil para evitar errores de conexión cuando estás empezando,
     // pero en aplicaciones grandes se usa LAZY para mejorar el rendimiento.
@@ -76,6 +79,14 @@ public class Actor {
 
     public void setPais(String pais) {
         this.pais = pais;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public List<Pelicula> getPeliculas() {

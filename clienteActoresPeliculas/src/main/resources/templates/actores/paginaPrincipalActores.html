@@ -26,9 +26,10 @@
 
         <!-- Contenido detallado del actor seleccionado, este contenido inicia con display ='none', no se ve -->
         <div id="contenido-detalle">
-            <!-- Imagen default -->
+            <!-- Imagen y placeholder en caso de que no haya imagen -->
             <div class="detalle-img-container">
-                <svg class="default-user-icon" viewBox="0 0 24 24">
+                <img id="det-img" src="" alt="">
+                <svg id="default-user-icon" class="default-user-icon" viewBox="0 0 24 24">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                 </svg>
             </div>
@@ -39,7 +40,6 @@
                 <p style="margin-top: 20px; font-size: 0.9em; color: #888;">ID de referencia: #<span id="det-id"></span></p>
                 <p><strong>País de origen:</strong> <span id="det-pais"></span></p>
                 <p><strong>Fecha de nacimiento:</strong> <span id="det-fecha"></span></p>
-                <p><strong>Edad:</strong> <span id="det-edad" style="color: #666; font-style: italic;"></span></p>
 
                 <!-- Acciones de editar, borrar y unir actor a película, se aplica el enlace mediante el script actores -->
                 <div class="detalle-acciones">
@@ -68,11 +68,18 @@
              th:data-nombre="${actor.nombre}"
              th:data-fecha="${actor.fechaNacimiento}"
              th:data-pais="${actor.pais}"
+             th:data-imagen="${actor.imagen}"
              onclick="mostrarDetalles(this)">
 
-            <svg viewBox="0 0 24 24">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
+            <!-- Se muestra la imagen y en su defecto un placeholder, el título y año de la misma -->
+            <img th:if="${actor.imagen != null and actor.imagen != ''}"
+                 th:src="${actor.imagen}" alt="Cartel">
+
+            <div th:unless="${actor.imagen != null and actor.imagen != ''}">
+                <svg class="default-user-icon" viewBox="0 0 24 24">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+            </div>
 
             <h4 th:text="${actor.nombre}"
                 style="margin: 10px 0;

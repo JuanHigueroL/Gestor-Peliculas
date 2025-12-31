@@ -15,23 +15,18 @@ function mostrarDetalles(elemento) {
     document.getElementById('btn-borrar-actor').href = '/actores/borrar/' + data.id;
     document.getElementById('btn btn-unirPelicula-actor').href ='/actores/unirPelicula/'+ data.id;
 
-    // Lógica de Fecha y Edad
-    if (data.fecha) {
-        const dateObj = new Date(data.fecha);
-        document.getElementById('det-fecha').innerText = dateObj.toLocaleDateString();
+    // Gestión de la imagen
+    const imgElement = document.getElementById('det-img');
+    const placeholderElement = document.getElementById('default-user-icon');
 
-        const hoy = new Date();
-        let edad = hoy.getFullYear() - dateObj.getFullYear();
-        const m = hoy.getMonth() - dateObj.getMonth();
-        if (m < 0 || (m === 0 && hoy.getDate() < dateObj.getDate())) {
-            edad--;
-        }
-        document.getElementById('det-edad').innerText = edad + " años";
+    if (data.imagen && data.imagen !== '') {
+        imgElement.src = data.imagen;
+        imgElement.style.display = 'block';
+        placeholderElement.style.display = 'none';
     } else {
-        document.getElementById('det-fecha').innerText = "Desconocida";
-        document.getElementById('det-edad').innerText = "";
+        imgElement.style.display = 'none';
+        placeholderElement.style.display = 'block';
     }
-
 
     // Mostrar contenedor y ocultar mensaje vacío
     document.getElementById('mensaje-vacio').style.display = 'none';
