@@ -1,6 +1,7 @@
 package es.uah.clienteActoresPeliculas.controller;
 
 
+import es.uah.clienteActoresPeliculas.model.Actor;
 import es.uah.clienteActoresPeliculas.model.Pelicula;
 import es.uah.clienteActoresPeliculas.paginator.PageRender;
 import es.uah.clienteActoresPeliculas.service.IPeliculaService;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/peliculas")
@@ -27,11 +31,24 @@ public class PeliculaController {
     @GetMapping(value= {"", "/", "/listado"})
     public String inicio(Model model, @RequestParam(name="page", defaultValue="0") int page) {
         Pageable pageable = PageRequest.of(page, 5);
-        Page<Pelicula> listado =peliculaService.buscarTodos(pageable);
-        PageRender<Pelicula> pageRender = new PageRender<Pelicula>("/peliculas/listado", listado);
-        model.addAttribute("titulo", "Listado de todas las peliculas");
+        Page<Pelicula> listado = peliculaService.buscarTodos(pageable);
+
+        // Creamos un mapa: CLAVE = ID Película y Lista de Actores
+        Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
+
+        for (Pelicula peli : listado) {
+            // Asignamos al ID de la peli y sus actores
+            actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
+        }
+
+        model.addAttribute("actoresMap", actoresPorPelicula);
+
+        PageRender<Pelicula> pageRender = new PageRender<>("/peliculas/listado", listado);
+
+        model.addAttribute("titulo", "Listado de todas las películas");
         model.addAttribute("listadoPeliculas", listado);
         model.addAttribute("page", pageRender);
+
         return "peliculas/paginaPrincipalPeliculas";
     }
 
@@ -42,8 +59,6 @@ public class PeliculaController {
         model.addAttribute("titulo", "Nueva Pelicula");
         return "peliculas/formPelicula";
     }
-
-
 
     @GetMapping("/id")
     public String buscarPeliculaPorId(@RequestParam(name="page", defaultValue="0") int page, Model model,@RequestParam(name= "id", required = false) Integer id) {
@@ -64,6 +79,17 @@ public class PeliculaController {
                 listado = new PageImpl<>(Collections.emptyList(), pageable, 0);
             }
         }
+
+        // Creamos un mapa: CLAVE = ID Película y Lista de Actores
+        Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
+
+        for (Pelicula peli : listado) {
+            // Asignamos al ID de la peli y sus actores
+            actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
+        }
+
+        model.addAttribute("actoresMap", actoresPorPelicula);
+
         PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/id?id=%s".formatted(id), listado);
         model.addAttribute("mensajeFiltro", "Se han filtrado las películas por el id '"+ id+ "'");
         model.addAttribute("titulo", "Búsqueda de película por ID");
@@ -81,6 +107,17 @@ public class PeliculaController {
         } else{
             listado= peliculaService.buscarPeliculasPorTitulo(titulo, pageable);
         }
+
+        // Creamos un mapa: CLAVE = ID Película y Lista de Actores
+        Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
+
+        for (Pelicula peli : listado) {
+            // Asignamos al ID de la peli y sus actores
+            actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
+        }
+
+        model.addAttribute("actoresMap", actoresPorPelicula);
+
         PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/titulo?titulo=%s".formatted(titulo), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el título '"+ titulo+"'");
         model.addAttribute("titulo", "Listado de peliculas");
@@ -98,6 +135,17 @@ public class PeliculaController {
         } else{
             listado= peliculaService.buscarPeliculasPorGenero(genero, pageable);
         }
+
+        // Creamos un mapa: CLAVE = ID Película y Lista de Actores
+        Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
+
+        for (Pelicula peli : listado) {
+            // Asignamos al ID de la peli y sus actores
+            actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
+        }
+
+        model.addAttribute("actoresMap", actoresPorPelicula);
+
         PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/genero?genero=%s".formatted(genero), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el genero '"+ genero+"'");
         model.addAttribute("titulo", "Listado de peliculas");
@@ -115,6 +163,17 @@ public class PeliculaController {
         } else{
             listado= peliculaService.buscarPeliculasPorActor(actor, pageable);
         }
+
+        // Creamos un mapa: CLAVE = ID Película y Lista de Actores
+        Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
+
+        for (Pelicula peli : listado) {
+            // Asignamos al ID de la peli y sus actores
+            actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
+        }
+
+        model.addAttribute("actoresMap", actoresPorPelicula);
+
         PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/actor?actor=%s".formatted(actor), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el id del actor '"+ actor+"'");
         model.addAttribute("actor", "Listado de peliculas");

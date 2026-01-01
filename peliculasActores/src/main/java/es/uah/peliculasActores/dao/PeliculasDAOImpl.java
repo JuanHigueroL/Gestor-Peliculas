@@ -51,6 +51,16 @@ public class PeliculasDAOImpl implements IPeliculasDAO {
         return peliculasJPA.findByActoresContainingIgnoreCase(actorPelicula);
     }
 
+    @Override
+    public List<Actor> buscarActoresDePelicula(Integer idPelicula) {
+        Optional<Pelicula> optional = peliculasJPA.findById(idPelicula);
+        if (optional.isPresent()) {
+            Pelicula pelicula = optional.get();
+            return List.copyOf(pelicula.getActores());
+        }
+        return null;
+    }
+
     //Implementa la función para guardar o actualizar una pelicula.
     @Override
     public void guardarActualizarPelicula(Pelicula pelicula) {

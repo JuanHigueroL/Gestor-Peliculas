@@ -33,7 +33,19 @@ function mostrarDetalles(elemento) {
     // Mostrar contenedor y ocultar mensaje vacío
     document.getElementById('mensaje-vacio').style.display = 'none';
     document.getElementById('contenido-detalle').style.display = 'flex';
+    document.getElementById('contenido-listado').style.display = 'flex';
 
     // Scroll suave hacia el detalle
-    document.getElementById('contenido-detalle').scrollIntoView({ behavior: 'smooth' });
+    //document.getElementById('contenido-detalle').scrollIntoView({ behavior: 'smooth' });
+
+    // --- LÓGICA DE LA LISTA DE ACTORES ---
+    // Oculta todas las listas de actores que haya en pantalla
+    const todasLasListas = document.querySelectorAll('.lista-actores-item');
+    todasLasListas.forEach(function(lista) {
+        lista.style.display = 'none';
+    });
+
+    // Muestra la lista de actores correspondiente a la película seleccionada
+    document.getElementById('lista-actores-' + data.id).style.display = 'flex';
+
 }

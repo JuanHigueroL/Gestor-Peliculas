@@ -1,5 +1,6 @@
 package es.uah.clienteActoresPeliculas.service;
 
+import es.uah.clienteActoresPeliculas.model.Actor;
 import es.uah.clienteActoresPeliculas.model.Pelicula;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,8 @@ public interface IPeliculaService {
     Page<Pelicula> buscarPeliculasPorGenero(String genero, Pageable pageable);
 
     Page<Pelicula> buscarPeliculasPorActor(Integer idActor, Pageable pageable);
+
+    List<Actor> buscarActoresDePelicula(Integer idPelicula);
 
     void guardarPelicula(Pelicula pelicula);
 

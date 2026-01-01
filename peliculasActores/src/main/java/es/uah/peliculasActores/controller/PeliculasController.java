@@ -2,6 +2,7 @@ package es.uah.peliculasActores.controller;
 
 import es.uah.peliculasActores.dao.IPeliculasDAO;
 import es.uah.peliculasActores.dao.IPeliculasJPA;
+import es.uah.peliculasActores.model.Actor;
 import es.uah.peliculasActores.model.Pelicula;
 import es.uah.peliculasActores.service.IPeliculasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,12 @@ public class PeliculasController {
     @GetMapping("/peliculas/actor/{idActor}")
     public List<Pelicula> buscarPeliculasPorActor(@PathVariable Integer idActor) {
         return  peliculasService.buscarPeliculasPorActor(idActor);
+    }
+
+    //Cuando realiza un get con la URL "/peliculas/(id de la pelicula)/actores" llama a la función buscarActoresDePelicula de Service, enviándole el id de la pelicula de la URL como variable
+    @GetMapping("/peliculas/{idPelicula}/actores")
+    public List<Actor> buscarActoresDePelicula(@PathVariable Integer idPelicula) {
+        return peliculasService.buscarActoresDePelicula(idPelicula);
     }
 
     //Cuando realiza un post con la URL "/peliculas" llama a la función guardarPelicula, enviándole el JSON como una pelicula

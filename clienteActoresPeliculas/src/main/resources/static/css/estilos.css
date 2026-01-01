@@ -1,3 +1,68 @@
+
+/* CARRUSEL */
+.carousel-container {
+    display: flex;              /* Pone los elementos en fila */
+    overflow-x: auto;           /* Permite scroll horizontal */
+    scroll-snap-type: x mandatory; /* Efecto magnético al hacer scroll */
+    gap: 15px;                  /* Espacio entre tarjetas */
+    padding: 10px 0;            /* Un poco de aire arriba y abajo */
+
+    /* Opcional: Ocultar barra de scroll fea en navegadores modernos */
+    scrollbar-width: thin;
+}
+
+/* 2. La tarjeta individual */
+.actor-card {
+    flex: 0 0 150px;           /* IMPORTANTE: Ancho fijo (ej. 150px) y no se encoge (0) */
+    scroll-snap-align: start;  /* Alineación del efecto magnético */
+
+    /* Estilos estéticos de la tarjeta */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 3. Controlar la imagen para que no rompa el diseño */
+.actor-card img {
+    width: 100%;       /* Que ocupe el ancho de la tarjeta */
+    height: 200px;     /* Altura fija para que todas sean iguales */
+    object-fit: cover; /* Recorta la imagen para que no se deforme */
+    border-radius: 4px;
+}
+
+/* 4. Estilo para el placeholder (cuando no hay foto) */
+.placeholder-icon {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+.default-user-icon {
+    width: 50%;
+    fill: #ccc;
+}
+
+/* 5. Estilos de texto (los que tú tenías, limpiados) */
+.actor-card h4 {
+    margin: 10px 0 5px 0;
+    font-size: 1rem;
+    word-wrap: break-word; /* Para nombres muy largos */
+}
+
+.actor-card small {
+    color: #666;
+    display: block; /* Asegura que vaya debajo */
+}
+
+
+
 /* ==========================================================================
    1. ESTILOS GLOBALES Y VARIABLES (Base para toda la web)
    ========================================================================== */
@@ -623,6 +688,13 @@ textarea {
 }
 
 #contenido-detalle {
+    display: none;
+    width: 100%;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+#contenido-listado {
     display: none;
     width: 100%;
     gap: 30px;

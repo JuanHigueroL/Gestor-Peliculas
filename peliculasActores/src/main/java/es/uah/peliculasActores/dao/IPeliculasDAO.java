@@ -18,6 +18,8 @@ public interface IPeliculasDAO {
 
     List<Pelicula> buscarPeliculasPorActor(Actor actorPelicula);
 
+    List<Actor> buscarActoresDePelicula(Integer idPelicula);
+
     void guardarActualizarPelicula(Pelicula pelicula);
 
     void eliminarPelicula(Integer idPelicula);

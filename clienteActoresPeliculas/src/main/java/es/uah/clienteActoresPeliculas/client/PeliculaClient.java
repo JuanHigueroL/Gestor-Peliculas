@@ -1,5 +1,6 @@
 package es.uah.clienteActoresPeliculas.client;
 
+import es.uah.clienteActoresPeliculas.model.Actor;
 import es.uah.clienteActoresPeliculas.model.Pelicula;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.service.annotation.*;
@@ -24,6 +25,9 @@ public interface PeliculaClient {
 
     @GetExchange("/actor/{idActor}")
     List<Pelicula> buscarPeliculasPorActor(@PathVariable Integer idActor);
+
+    @GetExchange("/{idPelicula}/actores")
+    List<Actor> buscarActoresDePelicula(@PathVariable Integer idPelicula);
 
     @PostExchange
     void guardarPelicula(@RequestBody Pelicula pelicula);

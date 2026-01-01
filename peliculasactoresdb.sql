@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `peliculasactoresdb`.`Actores` (
   `nombre` VARCHAR(45) NOT NULL,
   `fechaNacimiento` DATE NOT NULL,
   `pais` VARCHAR(45) NOT NULL,
-  -- `imagen` TEXT NOT NULL,
+  `imagen` TEXT NOT NULL,
   PRIMARY KEY (`idActor`))
 ENGINE = InnoDB; 
 

@@ -44,6 +44,11 @@ public class PeliculasServiceImpl implements IPeliculasService {
         return peliculasDAO.buscarPeliculasPorActor(actoresDAO.buscarActorPorId(idActor));
     }
 
+    @Override
+    public List<Actor> buscarActoresDePelicula(Integer idPelicula) {
+        return peliculasDAO.buscarActoresDePelicula(idPelicula);
+    }
+
     //Comprueba que la película que queremos guardar no tiene un id o bien sea 0 ese id para convertirlo en Null y guardarlo
     @Override
     public void guardarPelicula(Pelicula pelicula) {

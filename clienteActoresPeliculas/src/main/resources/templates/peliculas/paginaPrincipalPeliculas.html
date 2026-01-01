@@ -54,8 +54,53 @@
                     <a id="btn-borrar-detalle" href="#" class="btn btn-borrar"
                        onclick="return confirm('¿Estás seguro de que deseas eliminar esta película?')">Borrar</a>
                 </div>
+
             </div>
+
+
+            </div>
+
+            <!-- Listado de actores en tarjetas -->
+        <div id="contenido-listado">
+            <p><strong>Actores partícipes de la película</strong></p>
+
+            <!-- Se usa th:block para no generar divs innecesarios -->
+            <!-- Bucle que recorre el mapa de actores por película -->
+            <!-- entry.key es el id de las películas y entry.value es la lista de actores -->
+            <th:block th:each="entry : ${actoresMap}">
+                <!-- Contenedor de la lista de actores para cada película, inicia oculto y generando un id para cada lista de actores -->
+                <div th:id="'lista-actores-' + ${entry.key}"
+                     class="carousel-container lista-actores-item"
+                     style="display: none;">
+
+                    <!-- Bucle que recorre la lista de actores de las películas-->
+                    <div class="actor-card" th:each="actor : ${entry.value}">
+                        <!-- Imagen del actor o placeholder en caso de que no haya imagen -->
+                        <img th:if="${actor.imagen != null and actor.imagen != ''}"
+                             th:src="${actor.imagen}"
+                             alt="Foto actor"
+                             class="card-img">
+
+                        <div th:unless="${actor.imagen != null and actor.imagen != ''}" class="placeholder-icon">
+                            <svg class="default-user-icon" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                        </div>
+                        <!-- Nombre y país del actor -->
+                        <h4 th:text="${actor.nombre}"></h4>
+                        <small th:text="${actor.pais}"></small>
+                    </div>
+                    <!-- Mensaje en caso de que no haya actores registrados para la película -->
+                    <div th:if="${#lists.isEmpty(entry.value)}" style="padding: 10px; color: #777;">
+                        No hay actores registrados para esta película.
+                    </div>
+
+                </div>
+            </th:block>
+
         </div>
+
+
     </section>
 
     <!-- Barra de acción para crear una nueva película -->
