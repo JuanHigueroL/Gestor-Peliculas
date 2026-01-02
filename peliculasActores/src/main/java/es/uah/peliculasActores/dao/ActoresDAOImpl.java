@@ -44,6 +44,16 @@ public class ActoresDAOImpl implements IActoresDAO {
         return actoresJPA.findByPaisContainingIgnoreCase(pais);
     }
 
+    @Override
+    public List<Pelicula> buscarPeliculasDeActor(Integer idActor) {
+        Optional<Actor> optional = actoresJPA.findById(idActor);
+        if (optional.isPresent()) {
+            Actor actor = optional.get();
+            return List.copyOf(actor.getPeliculas());
+        }
+        return null;
+    }
+
     //Implementa la función para guardar o actualizar un actor
     @Override
     public void guardarActualizarActor(Actor actor) {

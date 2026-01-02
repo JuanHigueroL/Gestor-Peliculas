@@ -2,6 +2,7 @@ package es.uah.clienteActoresPeliculas.service;
 
 import es.uah.clienteActoresPeliculas.client.ActorClient;
 import es.uah.clienteActoresPeliculas.model.Actor;
+import es.uah.clienteActoresPeliculas.model.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -44,6 +45,11 @@ public class ActorServiceImpl implements IActorService {
     public Page<Actor> buscarActoresPorPais(String pais, Pageable pageable) {
         List<Actor> lista = actorClient.buscarActoresPorPais(pais);
         return toPage(lista, pageable);
+    }
+
+    @Override
+    public List<Pelicula> buscarPeliculasDeActor(Integer idActor) {
+        return actorClient.buscarPeliculasDeActor(idActor);
     }
 
     @Override

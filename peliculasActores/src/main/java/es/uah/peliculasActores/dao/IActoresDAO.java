@@ -15,6 +15,8 @@ public interface IActoresDAO {
 
     List<Actor> buscarActoresPorPais(String pais);
 
+    List<Pelicula> buscarPeliculasDeActor(Integer idActor);
+
     void guardarActualizarActor(Actor actor);
 
     void eliminarActor(Integer idActor);

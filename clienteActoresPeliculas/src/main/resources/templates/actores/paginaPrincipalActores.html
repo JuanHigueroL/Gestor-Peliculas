@@ -50,6 +50,43 @@
                 </div>
             </div>
         </div>
+
+        <div id="contenido-listado">
+            <p><strong>Películas en las que participa</strong></p>
+
+            <th:block th:each="entry : ${peliculasMap}">
+
+                <div th:id="'lista-peliculas-' + ${entry.key}"
+                     class="carousel-container lista-peliculas-item"
+                     style="display: none;">
+
+                    <div class="actor-card" th:each="pelicula : ${entry.value}">
+
+                        <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
+                             th:src="${pelicula.imagen}"
+                             alt="Póster película"
+                             class="card-img">
+
+                        <div th:unless="${pelicula.imagen != null and pelicula.imagen != ''}" class="placeholder-icon">
+                            <svg class="default-user-icon" viewBox="0 0 24 24">
+                                <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
+                            </svg>
+                        </div>
+
+                        <h4 th:text="${pelicula.titulo}"></h4>
+                        <small th:text="${pelicula.año}"></small>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(entry.value)}" style="padding: 10px; color: #777;">
+                        No hay películas registradas para este actor.
+                    </div>
+
+                </div>
+            </th:block>
+
+        </div>
+
+
     </section>
 
     <!-- Botón para crear un nuevo actor -->

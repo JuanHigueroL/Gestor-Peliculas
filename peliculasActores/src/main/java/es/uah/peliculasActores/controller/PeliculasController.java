@@ -50,9 +50,9 @@ public class PeliculasController {
     }
 
     //Cuando realiza un get con la URL "/peliculas/(id de la pelicula)/actores" llama a la función buscarActoresDePelicula de Service, enviándole el id de la pelicula de la URL como variable
-    @GetMapping("/peliculas/{idPelicula}/actores")
-    public List<Actor> buscarActoresDePelicula(@PathVariable Integer idPelicula) {
-        return peliculasService.buscarActoresDePelicula(idPelicula);
+    @GetMapping("/peliculas/{id}/actores")
+    public List<Actor> buscarActoresDePelicula(@PathVariable Integer id) {
+        return peliculasService.buscarActoresDePelicula(id);
     }
 
     //Cuando realiza un post con la URL "/peliculas" llama a la función guardarPelicula, enviándole el JSON como una pelicula

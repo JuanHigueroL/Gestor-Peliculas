@@ -41,6 +41,11 @@ public class ActoresServiceImpl implements IActoresService {
         return actoresDAO.buscarActoresPorPais(pais);
     }
 
+    @Override
+    public List<Pelicula> buscarPeliculasDeActor(Integer idActor) {
+        return actoresDAO.buscarPeliculasDeActor(idActor);
+    }
+
     //Comprueba que el Actor que queremos guardar no tiene un id o bien sea 0 ese id para convertirlo en Null y guardarlo
     @Override
     public void guardarActor(Actor actor) {

@@ -1,6 +1,7 @@
 package es.uah.peliculasActores.service;
 
 import es.uah.peliculasActores.model.Actor;
+import es.uah.peliculasActores.model.Pelicula;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public interface IActoresService {
     List<Actor> buscarActoresPorNombre(String nombre);
 
     List<Actor> buscarActoresPorPais(String pais);
+
+    List<Pelicula> buscarPeliculasDeActor(Integer idActor);
 
     void guardarActor(Actor actor);
 

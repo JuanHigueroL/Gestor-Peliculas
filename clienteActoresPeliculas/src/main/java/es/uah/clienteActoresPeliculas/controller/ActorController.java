@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/actores")
@@ -32,7 +34,17 @@ public class ActorController {
     public String inicio(Model model, @RequestParam(name="page", defaultValue="0") int page) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Actor> listado =actorService.buscarTodos(pageable);
+
+        // Creamos un mapa: CLAVE = ID Actor y Lista de Películas
+        Map<Integer, List<Pelicula>> peliculasPorActor = new HashMap<>();
+        for (Actor actor : listado) {
+            // Asignamos al ID del actor y sus películas
+            peliculasPorActor.put(actor.getId(), actorService.buscarPeliculasDeActor(actor.getId()));
+        }
+        model.addAttribute("peliculasMap", peliculasPorActor);
+
         PageRender<Actor> pageRender = new PageRender<Actor>("/actores/listado", listado);
+
         model.addAttribute("titulo", "Listado de todos los actores");
         model.addAttribute("listadoActores", listado);
         model.addAttribute("page", pageRender);

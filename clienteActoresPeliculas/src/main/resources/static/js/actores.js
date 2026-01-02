@@ -31,7 +31,19 @@ function mostrarDetalles(elemento) {
     // Mostrar contenedor y ocultar mensaje vacío
     document.getElementById('mensaje-vacio').style.display = 'none';
     document.getElementById('contenido-detalle').style.display = 'flex';
+    document.getElementById('contenido-listado').style.display = 'flex';
 
     // Scroll
     //document.getElementById('contenido-detalle').scrollIntoView({ behavior: 'smooth' });
+
+
+    // --- LÓGICA DE LA LISTA DE PELICULAS ---
+    // Oculta todas las listas de películas que haya en pantalla
+    const todasLasListas = document.querySelectorAll('.lista-peliculas-item');
+    todasLasListas.forEach(function(lista) {
+        lista.style.display = 'none';
+    });
+
+    // Muestra la lista de películas correspondiente a la película seleccionada
+    document.getElementById('lista-peliculas-' + data.id).style.display = 'flex';
 }

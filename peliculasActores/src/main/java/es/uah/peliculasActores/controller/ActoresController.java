@@ -44,6 +44,11 @@ public class ActoresController{
         return  iActoresService.buscarActoresPorPais(pais);
     }
 
+    @GetMapping("/actores/{id}/peliculas")
+    public List<Pelicula> buscarPeliculasDeActor(@PathVariable Integer id) {
+        return iActoresService.buscarPeliculasDeActor(id);
+    }
+
     //Cuando realiza un post con la URL "/actores" llama a la función guardarActor, enviándole el JSON como un Actor
     @PostMapping("/actores")
     public void guardarActor(@RequestBody Actor actor) {
