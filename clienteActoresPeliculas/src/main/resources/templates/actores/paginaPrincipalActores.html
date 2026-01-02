@@ -51,17 +51,22 @@
             </div>
         </div>
 
+        <!-- Listado de películas en las que participa el actor seleccionado -->
         <div id="contenido-listado">
             <p><strong>Películas en las que participa</strong></p>
 
+            <!-- Se usa th:block para no generar divs innecesarios -->
+            <!-- Bucle que recorre el mapa de películas por actor -->
+            <!--entry.key es el id del actor y entry.value es la lista de películas del actor-->
             <th:block th:each="entry : ${peliculasMap}">
-
+                <!-- Contenedor de la lista de películas para cada actor, inicia oculto y generando un id para cada lista de películas -->
                 <div th:id="'lista-peliculas-' + ${entry.key}"
                      class="carousel-container lista-peliculas-item"
                      style="display: none;">
 
+                    <!-- Bucle que recorre la lista de películas del actor-->
                     <div class="actor-card" th:each="pelicula : ${entry.value}">
-
+                        <!-- Imagen de la película o placeholder en caso de que no haya imagen -->
                         <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
                              th:src="${pelicula.imagen}"
                              alt="Póster película"
@@ -72,11 +77,11 @@
                                 <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
                             </svg>
                         </div>
-
+                        <!-- Título y año de la película -->
                         <h4 th:text="${pelicula.titulo}"></h4>
                         <small th:text="${pelicula.año}"></small>
                     </div>
-
+                    <!-- Mensaje en caso de que no haya películas para el actor -->
                     <div th:if="${#lists.isEmpty(entry.value)}" style="padding: 10px; color: #777;">
                         No hay películas registradas para este actor.
                     </div>
