@@ -30,8 +30,21 @@
     <div class="form-card" style="max-width: 1500px;">
         <h2>Formulario de Unión</h2>
         <div class="info-text">
-            <span th:text="|Vas a unir al actor: ${nombreActor}|">Vas a unir al actor: Ejemplo</span>
+            <span th:text="|Vas a modificar la participación en películas de ${nombreActor}|"> Vas a modificar la participación en películas de Ejemplo</span>
         </div>
+
+        <div class="filtro-container">
+            <label for="buscador" style="font-size: 0.9em; color: #666; ">Buscar por nombre:</label>
+            <input type="text"
+                   id="buscador"
+                   placeholder="Escribe una película..."
+                   onkeyup="aplicarFiltros()"
+                   style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; margin: 0 auto 20px;">
+        </div>
+
+
+            <input type="checkbox" id="seleccionar-todos" onchange= "aplicarFiltros()">
+            <label for="seleccionar-todos">Ver las películas seleccionadas</label>
 
         <form th:action="@{/actores/unirActorPelicula}" method="post" id="form-unir-pelicula">
 

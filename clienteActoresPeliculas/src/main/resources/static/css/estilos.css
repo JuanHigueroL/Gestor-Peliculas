@@ -68,6 +68,7 @@
     font-size: 14px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     animation: popIn 0.3s ease; /* Pequeña animación de entrada */
+    z-index: 0; /* Siempre por encima */
 }
 
 /* --- ESTILOS DE IMAGEN Y TEXTO DENTRO DE LA TARJETA --- */
@@ -204,6 +205,9 @@
 
     /* Opcional: Ocultar barra de scroll fea en navegadores modernos */
     scrollbar-width: thin;
+    /* AÑADE ESTO: */
+    padding-top: 25px;
+    overflow-y: visible;
 }
 
 /* 2. La tarjeta individual */
@@ -901,6 +905,7 @@ textarea {
     width: 100%;
     gap: 30px;
     align-items: flex-start;
+
 }
 
 .detalle-img-container {
