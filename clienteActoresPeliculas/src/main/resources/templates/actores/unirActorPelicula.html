@@ -27,31 +27,94 @@
 
 <div class="main-container">
 
-    <div class="form-card">
+    <div class="form-card" style="max-width: 1500px;">
         <h2>Formulario de Unión</h2>
-
         <div class="info-text">
             <span th:text="|Vas a unir al actor: ${nombreActor}|">Vas a unir al actor: Ejemplo</span>
         </div>
 
-        <form th:action="@{/actores/unirActorPelicula}" method="post">
+        <form th:action="@{/actores/unirActorPelicula}" method="post" id="form-unir-pelicula">
 
-            <div class="form-group">
-                <label for="idPelicula">ID de la Película:</label>
-                <input type="number" id="idPelicula" name="id2" placeholder="Ej: 5" required>
-            </div>
+        <div id="contenido-listado-unir">
+            <th:block th:each="pelicula : ${listadoPeliculas}"
+                class="carousel-container lista-peliculas-item">
 
+                <div th:id="'lista-pelicula-' + ${pelicula.id}"
+                     class="seleccion-card"
+                     onclick="toggleSeleccion(this)">
+
+                    <input type="checkbox"
+                           name="ids"
+                           th:value="${pelicula.id}"
+                           style="display: none;">
+                    <!-- Imagen de la película o placeholder en caso de que no haya imagen -->
+                    <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
+                         th:src="${pelicula.imagen}"
+                         alt="Póster película"
+                         class="card-img">
+
+                    <div th:unless="${pelicula.imagen != null and pelicula.imagen != ''}" class="placeholder-icon">
+                        <svg class="default-user-icon" viewBox="0 0 24 24">
+                            <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
+                        </svg>
+                    </div>
+                    <!-- Título y año de la película -->
+                    <h4 th:text="${pelicula.titulo}"></h4>
+                    <small th:text="${pelicula.año}"></small>
+
+                </div>
+
+            </th:block>
+
+        </div>
             <input type="hidden" th:value="${idActor}" name="id1">
-
             <button type="submit" class="btn-guardar">Realizar Unión</button>
         </form>
-    </div>
+
+
+
 
     <div class="btn-volver-container">
         <a th:href="@{/actores}" class="btn-volver">Cancelar y volver</a>
     </div>
 
+
+
 </div>
 <script th:src="@{/js/scripts.js}"></script>
+<script th:src="@{/js/unirPelicula.js}"></script>
+    <script th:inline="javascript">
+        /* Recuperamos la lista desde el modelo de Spring */
+        const peliculasActor = [[${peliculasActor}]];
+
+        /* Verificamos que la lista no esté vacía para evitar errores */
+        if (peliculasActor && peliculasActor.length > 0) {
+
+            for (const item of peliculasActor) {
+                // DETECTAR SI ES OBJETO O ID:
+                // Si Spring pasa una lista de objetos Pelicula completo, usamos item.id
+                // Si Spring pasa una lista de Integers (IDs), usamos item directamente.
+                const idParaBuscar = (typeof item === 'object' && item !== null) ? item.id : item;
+
+                // Buscamos el elemento con el formato EXACTO del HTML: 'lista-pelicula-' + ID
+                const elemento = document.getElementById('lista-pelicula-' + idParaBuscar);
+
+                if (elemento) {
+                    // Si tienes la función toggleSeleccion accesible globalmente:
+                    toggleSeleccion(elemento);
+
+                    // Opcional: Si toggleSeleccion da problemas al cargar,
+                    // puedes forzar visualmente la selección así:
+                    /*
+                    const checkbox = elemento.querySelector('input[type="checkbox"]');
+                    if(checkbox) checkbox.checked = true;
+                    elemento.classList.add('seleccionado'); // O la clase CSS que uses para marcarlo
+                    */
+                } else {
+                    console.warn('No se encontró el elemento HTML para la película ID:', idParaBuscar);
+                }
+            }
+        }
+    </script>
 </body>
 </html>

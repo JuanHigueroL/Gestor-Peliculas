@@ -31,6 +31,11 @@ public class PeliculaServiceImpl implements IPeliculaService {
     }
 
     @Override
+    public List<Pelicula> buscarTodosLista() {
+        return peliculaClient.buscarTodos();
+    }
+
+    @Override
     public Pelicula buscarPeliculaPorId(Integer idPelicula) {
         return peliculaClient.buscarPeliculaPorId(idPelicula);
     }

@@ -1,5 +1,200 @@
 
-/* CARRUSEL */
+
+
+/* ==========================================================================
+   TARJETAS SELECCIONABLES CON EFECTO "SUBIDO"
+   ========================================================================== */
+
+/* --- ESTILO BASE DE LA TARJETA --- */
+.seleccion-card {
+    /* 1. Layout para carrusel o grid */
+    flex: 0 0 160px;          /* Ancho fijo de 160px, no se encoge */
+    width: 160px;             /* Aseguramos el ancho */
+    scroll-snap-align: start; /* Alineación magnética */
+
+    /* 2. Estética de la caja */
+    background-color: #ffffff;
+    border: 2px solid #e5e7eb; /* Borde gris muy suave */
+    border-radius: 16px;       /* Bordes bien redondeados */
+    padding: 15px;
+    text-align: center;
+    position: relative;        /* Necesario para posicionar el tick después */
+
+    /* 3. Sombras y Transiciones */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+    cursor: pointer;           /* Manito al pasar el mouse */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animación "elástica" suave */
+}
+
+/* Efecto Hover (cuando pasas el mouse sin clicar) */
+.seleccion-card:hover {
+    border-color: #b0b0b0;
+    transform: translateY(-3px); /* Pequeña subida */
+}
+
+/* --- ESTILO ACTIVO (Cuando se hace clic) --- */
+.seleccion-card.activo {
+    /* 1. Cambio de colores */
+    border-color: #3b82f6;     /* Borde Azul Brillante */
+    background-color: #eff6ff; /* Fondo Azul muy pálido */
+
+    /* 2. Efecto de Levitación */
+    transform: translateY(-12px); /* Sube bastante */
+
+    /* 3. Sombra de profundidad (azulada) */
+    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.3),
+    0 10px 10px -5px rgba(59, 130, 246, 0.1);
+}
+
+/* --- EL TICK ✔ (Magia Visual) --- */
+/* Esto crea un círculo con un tick que aparece solo cuando está activo */
+.seleccion-card.activo::after {
+    content: "✓";
+    position: absolute;
+    top: -10px;   /* Se sale un poco por arriba */
+    right: -10px; /* Se sale un poco por la derecha */
+
+    background-color: #3b82f6; /* Fondo Azul */
+    color: white;              /* Tick Blanco */
+
+    width: 28px;
+    height: 28px;
+    border-radius: 50%; /* Círculo perfecto */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    animation: popIn 0.3s ease; /* Pequeña animación de entrada */
+}
+
+/* --- ESTILOS DE IMAGEN Y TEXTO DENTRO DE LA TARJETA --- */
+.seleccion-card img,
+.seleccion-card .placeholder-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px; /* La imagen también redondeada */
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.seleccion-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 5px 0;
+
+    /* Cortar texto si es muy largo con "..." */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.seleccion-card small {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Animación para el tick */
+@keyframes popIn {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+
+
+
+/* --- 1. El Grid para que se vean ordenadas --- */
+.contenedor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* --- 2. La Tarjeta (Estado Normal) --- */
+.card-seleccion {
+    display: block; /* Necesario para el label */
+    position: relative;
+    background: white;
+    border: 2px solid #e0e0e0; /* Borde gris suave */
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer; /* Manito al pasar el mouse */
+    transition: all 0.3s ease; /* Suavidad en la animación */
+    text-align: center;
+}
+
+/* Efecto al pasar el mouse por encima (Hover simple) */
+.card-seleccion:hover {
+    border-color: #bbb;
+}
+
+/* --- 3. ESTADO ACTIVO / SELECCIONADO (La clave) --- */
+/* "Si la tarjeta contiene un input marcado..." */
+.card-seleccion:has(input:checked) {
+    border-color: #4CAF50;       /* Borde verde (o tu color favorito) */
+    background-color: #f0fff4;   /* Fondo verde muy clarito */
+
+    /* EFECTO "SUBIDO" */
+    transform: translateY(-8px); /* Mueve la tarjeta hacia arriba */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Sombra debajo para dar altura */
+}
+
+/* --- 4. Ajustes de Imagen y Texto --- */
+.img-mini, .placeholder-mini {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 10px;
+    display: block;
+}
+
+.card-seleccion span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    display: block;
+}
+
+/* --- 5. Opcional: Esconder el cuadradito del checkbox --- */
+/* Si quieres que NO se vea el cuadradito y solo sea la tarjeta */
+.checkbox-oculto {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Opcional: Si ocultaste el checkbox, añade un "Check" visual cuando esté activo */
+.card-seleccion:has(input:checked)::after {
+    content: "✔";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #4CAF50;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+/* ==========================================================================
+   CARRUSEL HORIZONTAL DE ACTORES Y PELÍCULAS
+   ========================================================================== */
+
 .carousel-container {
     display: flex;              /* Pone los elementos en fila */
     overflow-x: auto;           /* Permite scroll horizontal */
@@ -12,7 +207,7 @@
 }
 
 /* 2. La tarjeta individual */
-.actor-card {
+.actor-card, .pelicula-card {
     flex: 0 0 150px;           /* IMPORTANTE: Ancho fijo (ej. 150px) y no se encoge (0) */
     scroll-snap-align: start;  /* Alineación del efecto magnético */
 
@@ -26,7 +221,7 @@
 }
 
 /* 3. Controlar la imagen para que no rompa el diseño */
-.actor-card img {
+.actor-card img, .pelicula-card img {
     width: 100%;       /* Que ocupe el ancho de la tarjeta */
     height: 200px;     /* Altura fija para que todas sean iguales */
     object-fit: cover; /* Recorta la imagen para que no se deforme */
@@ -50,13 +245,13 @@
 }
 
 /* 5. Estilos de texto (los que tú tenías, limpiados) */
-.actor-card h4 {
+.actor-card h4 , .pelicula-card h4 {
     margin: 10px 0 5px 0;
     font-size: 1rem;
     word-wrap: break-word; /* Para nombres muy largos */
 }
 
-.actor-card small {
+.actor-card small , .pelicula-card small {
     color: #666;
     display: block; /* Asegura que vaya debajo */
 }
@@ -701,6 +896,13 @@ textarea {
     align-items: flex-start;
 }
 
+#contenido-listado-unir {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    align-items: flex-start;
+}
+
 .detalle-img-container {
     flex: 0 0 200px;
     text-align: center;
@@ -770,7 +972,7 @@ textarea {
     margin: 0 auto;
 }
 
-.movie-card, .actor-card {
+.movie-card, .actor-card , .pelicula-card{
     background: var(--bg-tarjeta); /* Adaptable */
     border: 1px solid var(--borde-color);
     border-radius: 8px;
@@ -785,20 +987,20 @@ textarea {
     color: var(--color-texto);
 }
 
-.movie-card:hover, .actor-card:hover {
+.movie-card:hover, .actor-card:hover , .pelicula-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px var(--sombra-hover);
     border-color: #888;
 }
 
-.movie-card img, .actor-card img {
+.movie-card img, .actor-card img , .pelicula-card img {
     max-width: 100%;
     height: auto;
     border-radius: 4px;
     margin-top: 10px;
 }
 
-.actor-card svg {
+.actor-card svg , .pelicula-card svg {
     width: 100px;
     height: 100px;
     fill: #555;

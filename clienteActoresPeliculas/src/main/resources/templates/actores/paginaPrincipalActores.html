@@ -65,7 +65,7 @@
                      style="display: none;">
 
                     <!-- Bucle que recorre la lista de películas del actor-->
-                    <div class="actor-card" th:each="pelicula : ${entry.value}">
+                    <div class="pelicula-card" th:each="pelicula : ${entry.value}">
                         <!-- Imagen de la película o placeholder en caso de que no haya imagen -->
                         <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
                              th:src="${pelicula.imagen}"

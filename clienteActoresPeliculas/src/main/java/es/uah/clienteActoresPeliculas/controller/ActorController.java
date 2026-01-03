@@ -15,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/actores")
@@ -151,27 +148,27 @@ public class ActorController {
     @GetMapping("/unirPelicula/{id}")
     public String unirPelicula(@PathVariable("id") int id, Model model) {
         Actor actor = actorService.buscarActorPorId(id);
+        List<Pelicula> peliculasActor = actorService.buscarPeliculasDeActor(id);
+        List<Integer> idPeliculas = new ArrayList<>();
+        for (Pelicula p : peliculasActor) {
+            idPeliculas.add(p.getId());
+        }
+        model.addAttribute("listadoPeliculas", peliculaService.buscarTodosLista());
         model.addAttribute("nombreActor", actor.getNombre());
+        model.addAttribute("peliculasActor", idPeliculas);
         model.addAttribute("idActor", id);
         return "actores/unirActorPelicula";
     }
 
     @PostMapping("/unirActorPelicula")
-    public String añadirPelicula(Model model, int id1, int id2, RedirectAttributes attributes){
-        if(peliculaService.buscarPeliculaPorId(id2)==null){
-            attributes.addFlashAttribute("mensajeError", "La película que has elegido no existe");
-        }else if (actorService.buscarActorPorId(id1)==null) {
-            attributes.addFlashAttribute("mensajeError", "El actor que has elegido no existe");
-        }else{
-            actorService.añadirPelicula(id1, id2);
-            Actor actor = actorService.buscarActorPorId(id1);
-            String nombreActor = actor.getNombre();
-            Pelicula pelicula = peliculaService.buscarPeliculaPorId(id2);
-            String tituloPelicula = pelicula.getTitulo();
-            attributes.addFlashAttribute("mensajeExito", "Se ha apuntado al actor con nombre '"+ nombreActor+ "' en la película '"+ tituloPelicula+ "'");
+    public String añadirPelicula(Model model, Integer id1,@RequestParam(name="ids", required=false) List<Integer> id2, RedirectAttributes attributes){
+
+        for (Integer id: id2) {
+            if(peliculaService.buscarPeliculaPorId(id)!=null && actorService.buscarActorPorId(id1)!=null){
+                actorService.añadirPelicula(id1, id);
+            }
         }
         return "redirect:/actores";
     }
-
 
 }
