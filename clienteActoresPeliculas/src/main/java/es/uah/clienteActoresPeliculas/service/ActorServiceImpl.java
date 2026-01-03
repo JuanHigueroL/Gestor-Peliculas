@@ -76,6 +76,11 @@ public class ActorServiceImpl implements IActorService {
         actorClient.añadirPelicula(idActor, idPelicula);
     }
 
+    @Override
+    public void eliminarPelicula(Integer idActor, Integer idPelicula) {
+        actorClient.eliminarPelicula(idActor, idPelicula);
+    }
+
     private Page<Actor> toPage(List<Actor> lista, Pageable pageable) {
         if (lista == null || lista.isEmpty()) {
             return Page.empty(pageable);

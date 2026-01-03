@@ -93,5 +93,15 @@ public class ActoresServiceImpl implements IActoresService {
         }
     }
 
+    @Override
+    public void eliminarPelicula(Integer idActor, Integer idPelicula) {
+        Actor actorActual = actoresDAO.buscarActorPorId(idActor);
+        Pelicula peliculaActual = peliculasDAO.buscarPeliculaPorId(idPelicula);
+        if (actorActual != null && peliculaActual != null) {
+            actorActual.removePelicula(peliculaActual);
+            actoresDAO.guardarActualizarActor(actorActual);
+        }
+    }
+
 
 }

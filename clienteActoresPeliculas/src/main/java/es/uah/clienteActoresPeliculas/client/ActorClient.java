@@ -38,4 +38,7 @@ public interface ActorClient {
     @PostExchange("/{id1}/{id2}")
     void añadirPelicula(@PathVariable("id1") Integer idActor,@PathVariable("id2") Integer idPelicula);
 
+    @PostExchange("/eliminar/{id1}/{id2}")
+    void eliminarPelicula(@PathVariable("id1") Integer idActor,@PathVariable("id2") Integer idPelicula);
+
 }

@@ -27,4 +27,6 @@ public interface IActorService {
 
     void añadirPelicula(Integer idActor, Integer idPelicula);
 
+    void eliminarPelicula(Integer idActor, Integer idPelicula);
+
 }

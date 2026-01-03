@@ -35,9 +35,8 @@
 
         <form th:action="@{/actores/unirActorPelicula}" method="post" id="form-unir-pelicula">
 
-        <div id="contenido-listado-unir">
-            <th:block th:each="pelicula : ${listadoPeliculas}"
-                class="carousel-container lista-peliculas-item">
+        <div id="contenido-listado-unir" class="carousel-container">
+            <th:block th:each="pelicula : ${listadoPeliculas}">
 
                 <div th:id="'lista-pelicula-' + ${pelicula.id}"
                      class="seleccion-card"
@@ -83,35 +82,20 @@
 </div>
 <script th:src="@{/js/scripts.js}"></script>
 <script th:src="@{/js/unirPelicula.js}"></script>
-    <script th:inline="javascript">
-        /* Recuperamos la lista desde el modelo de Spring */
+<script>
+        // Lista de ids que tiene el actor
         const peliculasActor = [[${peliculasActor}]];
-
-        /* Verificamos que la lista no esté vacía para evitar errores */
+        // Si la lista no está vacía, recorremos y seleccionamos cada película
         if (peliculasActor && peliculasActor.length > 0) {
-
-            for (const item of peliculasActor) {
-                // DETECTAR SI ES OBJETO O ID:
-                // Si Spring pasa una lista de objetos Pelicula completo, usamos item.id
-                // Si Spring pasa una lista de Integers (IDs), usamos item directamente.
-                const idParaBuscar = (typeof item === 'object' && item !== null) ? item.id : item;
-
+            for (const id of peliculasActor) {
                 // Buscamos el elemento con el formato EXACTO del HTML: 'lista-pelicula-' + ID
-                const elemento = document.getElementById('lista-pelicula-' + idParaBuscar);
+                const pelicula = document.getElementById('lista-pelicula-' + id);
 
-                if (elemento) {
-                    // Si tienes la función toggleSeleccion accesible globalmente:
-                    toggleSeleccion(elemento);
-
-                    // Opcional: Si toggleSeleccion da problemas al cargar,
-                    // puedes forzar visualmente la selección así:
-                    /*
-                    const checkbox = elemento.querySelector('input[type="checkbox"]');
-                    if(checkbox) checkbox.checked = true;
-                    elemento.classList.add('seleccionado'); // O la clase CSS que uses para marcarlo
-                    */
+                //Si existe el elemento, llamamos a la función para seleccionarlo, si no mostramos una advertencia en consola
+                if (pelicula) {
+                    toggleSeleccion(pelicula);
                 } else {
-                    console.warn('No se encontró el elemento HTML para la película ID:', idParaBuscar);
+                    console.warn('No se encontró el elemento HTML para la película ID:', id);
                 }
             }
         }

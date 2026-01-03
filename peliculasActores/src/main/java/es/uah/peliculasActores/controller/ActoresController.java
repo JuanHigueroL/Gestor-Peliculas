@@ -73,4 +73,9 @@ public class ActoresController{
         iActoresService.añadirPelicula(idActor,idPelicula);
     }
 
+    @PostMapping("/actores/eliminar/{id1}/{id2}")
+    public void eliminarPelicula(@PathVariable("id1") Integer idActor,@PathVariable("id2") Integer idPelicula){
+        iActoresService.eliminarPelicula(idActor,idPelicula);
+    }
+
 }
