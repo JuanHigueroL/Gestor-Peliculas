@@ -668,7 +668,7 @@ header h1 {
     background-color: var(--btn-rojo);
 }
 
-.btn-unirPelicula {
+.btn-unirPelicula , .btn-unirActor {
     background-color: var(--btn-verde);
 }
 

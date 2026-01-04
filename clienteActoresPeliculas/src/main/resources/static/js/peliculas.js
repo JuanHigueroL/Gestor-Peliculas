@@ -17,6 +17,7 @@ function mostrarDetalles(elemento) {
     // Actualizar botones de editar y borrar
     document.getElementById('btn-editar-detalle').href = '/peliculas/editar/' + data.id;
     document.getElementById('btn-borrar-detalle').href = '/peliculas/borrar/' + data.id;
+    document.getElementById('btn btn-unirActor-pelicula').href ='/peliculas/unirActor/'+ data.id;
     // Gestión de la imagen
     const imgElement = document.getElementById('det-img');
     const placeholderElement = document.getElementById('det-img-placeholder');

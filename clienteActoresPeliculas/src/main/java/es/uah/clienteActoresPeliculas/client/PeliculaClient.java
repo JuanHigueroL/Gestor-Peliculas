@@ -38,4 +38,10 @@ public interface PeliculaClient {
     @PutExchange
     void actualizarPelicula(@RequestBody Pelicula pelicula);
 
+    @PostExchange("/{id1}/{id2}")
+    void añadirActor(@PathVariable("id1") Integer idPelicula, @PathVariable("id2") Integer idActor);
+
+    @PostExchange("/eliminar/{id1}/{id2}")
+    void eliminarActor(@PathVariable("id1") Integer idPelicula, @PathVariable("id2") Integer idActor);
+
 }

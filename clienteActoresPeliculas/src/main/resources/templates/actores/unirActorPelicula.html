@@ -15,7 +15,7 @@
     <div class="header-left"></div>
 
     <div class="header-center">
-        <h1>Unir actor a una película</h1>
+        <h1>Unir actor a películas</h1>
     </div>
 
     <div class="settings-box" onclick="toggleSettingsSidebar()">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="filtro-container">
-            <label for="buscador" style="font-size: 0.9em; color: #666; ">Buscar por nombre:</label>
+            <label for="buscador" style="font-size: 0.9em; color: #666; ">Buscar por título:</label>
             <input type="text"
                    id="buscador"
                    placeholder="Escribe una película..."
@@ -80,7 +80,7 @@
 
         </div>
             <input type="hidden" th:value="${idActor}" name="id1">
-            <button type="submit" class="btn-guardar">Realizar Unión</button>
+            <button type="submit" class="btn-guardar">Realizar modificación</button>
         </form>
 
 

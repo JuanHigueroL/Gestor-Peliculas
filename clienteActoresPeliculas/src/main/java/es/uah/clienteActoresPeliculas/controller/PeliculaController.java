@@ -4,6 +4,7 @@ package es.uah.clienteActoresPeliculas.controller;
 import es.uah.clienteActoresPeliculas.model.Actor;
 import es.uah.clienteActoresPeliculas.model.Pelicula;
 import es.uah.clienteActoresPeliculas.paginator.PageRender;
+import es.uah.clienteActoresPeliculas.service.IActorService;
 import es.uah.clienteActoresPeliculas.service.IPeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,10 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -27,6 +25,9 @@ public class PeliculaController {
 
     @Autowired
     IPeliculaService peliculaService;
+
+    @Autowired
+    IActorService actorService;
 
     @GetMapping(value= {"", "/", "/listado"})
     public String inicio(Model model, @RequestParam(name="page", defaultValue="0") int page) {
@@ -208,6 +209,39 @@ public class PeliculaController {
         String titulo= peliculaService.buscarPeliculaPorId(id).getTitulo();
         peliculaService.eliminarPelicula(id);
         attributes.addFlashAttribute("mensajeBorrado", "Los datos de la película '"+titulo+ "' "+ "con id '"+id+"' fue borrada");
+        return "redirect:/peliculas";
+    }
+
+    @GetMapping("/unirActor/{id}")
+    public String unirActor(@PathVariable("id") int id, Model model) {
+        Pelicula pelicula = peliculaService.buscarPeliculaPorId(id);
+        List<Actor> actoresPelicula = peliculaService.buscarActoresDePelicula(id);
+        List<Integer> idActores = new ArrayList<>();
+        for (Actor a : actoresPelicula) {
+            idActores.add(a.getId());
+        }
+        model.addAttribute("listadoActores", actorService.buscarTodosLista());
+        model.addAttribute("tituloPelicula", pelicula.getTitulo());
+        model.addAttribute("actoresPelicula", idActores);
+        model.addAttribute("idPelicula", id);
+        return "peliculas/unirPeliculaActor";
+    }
+
+    @PostMapping("/unirPeliculaActor")
+    public String añadirActor(Model model, Integer id1,@RequestParam(name="ids", required=false) List<Integer> id2) {
+        List<Actor> actoresPelicula = peliculaService.buscarActoresDePelicula(id1);
+        for (Actor a : actoresPelicula) {
+            if (actorService.buscarActorPorId(a.getId()) != null && (a.getId() != null)) {
+                peliculaService.eliminarActor(id1, a.getId());
+            }
+        }
+        if (id2 != null) {
+            for (Integer id : id2) {
+                if (actorService.buscarActorPorId(id) != null && peliculaService.buscarPeliculaPorId(id1) != null) {
+                    peliculaService.añadirActor(id1, id);
+                }
+            }
+        }
         return "redirect:/peliculas";
     }
 

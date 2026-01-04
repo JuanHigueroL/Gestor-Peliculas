@@ -29,4 +29,8 @@ public interface IPeliculaService {
 
     void actualizarPelicula(Pelicula pelicula);
 
+    void añadirActor(Integer idPelicula, Integer idActor);
+
+    void eliminarActor(Integer idPelicula, Integer idActor);
+
 }

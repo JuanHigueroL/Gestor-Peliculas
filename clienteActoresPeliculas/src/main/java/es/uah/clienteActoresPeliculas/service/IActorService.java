@@ -11,6 +11,8 @@ public interface IActorService {
 
     Page<Actor> buscarTodos(Pageable pageable);
 
+    List<Actor> buscarTodosLista();
+
     Actor buscarActorPorId(Integer idActor);
 
     Page<Actor> buscarActoresPorNombre(String nombre, Pageable pageable);

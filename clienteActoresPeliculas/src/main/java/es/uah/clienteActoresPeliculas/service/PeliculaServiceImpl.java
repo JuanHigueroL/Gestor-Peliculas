@@ -83,6 +83,17 @@ public class PeliculaServiceImpl implements IPeliculaService {
         }
         peliculaClient.actualizarPelicula(pelicula);
     }
+
+    @Override
+    public void añadirActor(Integer idPelicula, Integer idActor) {
+        peliculaClient.añadirActor(idPelicula, idActor);
+    }
+
+    @Override
+    public void eliminarActor(Integer idPelicula, Integer idActor) {
+        peliculaClient.eliminarActor(idPelicula, idActor);
+    }
+
     //Función auxiliar para convertir List en una Page
     private Page<Pelicula> toPage(List<Pelicula> lista, Pageable pageable) {
         if (lista == null || lista.isEmpty()) {

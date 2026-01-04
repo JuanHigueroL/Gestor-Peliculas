@@ -72,4 +72,15 @@ public class PeliculasController {
     public void actualizarPelicula(@RequestBody Pelicula pelicula) {
         peliculasService.actualizarPelicula(pelicula);
     }
+
+    @PostMapping("/peliculas/{id1}/{id2}")
+    public void añadirActor(@PathVariable("id1") Integer idPelicula,@PathVariable("id2") Integer idActor){
+        peliculasService.añadirActor(idPelicula,idActor);
+    }
+
+    @PostMapping("/peliculas/eliminar/{id1}/{id2}")
+    public void eliminarActor(@PathVariable("id1") Integer idPelicula,@PathVariable("id2") Integer idActor){
+        peliculasService.eliminarActor(idPelicula,idActor);
+    }
+
 }

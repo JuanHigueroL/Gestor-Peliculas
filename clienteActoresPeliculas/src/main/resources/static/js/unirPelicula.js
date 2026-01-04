@@ -27,9 +27,9 @@ function aplicarFiltros() {
 
         // Se comprueba si cumple el criterio del nombre
         //Coge el título de la tarjeta
-        const nombrePelicula = tarjeta.getElementsByTagName("h4")[0].textContent;
+        const nombre = tarjeta.getElementsByTagName("h4")[0].textContent;
         // Se comprueba si el nombre contiene el texto del input (ignorando mayúsculas/minúsculas)
-        const coincideNombre = nombrePelicula.toLowerCase().indexOf(inputTexto) > -1;
+        const coincideNombre = nombre.toLowerCase().indexOf(inputTexto) > -1;
 
         // --- CRITERIO B: Estado (Activo/Seleccionado) ---
         // Comprobamos si tiene la clase 'activo'

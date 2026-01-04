@@ -87,4 +87,25 @@ public class PeliculasServiceImpl implements IPeliculasService {
             peliculasDAO.guardarActualizarPelicula(pelicula);
         }
     }
+
+    @Override
+    public void añadirActor(Integer idPelicula, Integer idActor) {
+        Actor actorActual= actoresDAO.buscarActorPorId(idActor);
+        Pelicula peliculaActual= peliculasDAO.buscarPeliculaPorId(idPelicula);
+        if(actorActual!=null && peliculaActual!=null){
+            actorActual.addPelicula(peliculaActual);
+            actoresDAO.guardarActualizarActor(actorActual);
+        }
+    }
+
+    @Override
+    public void eliminarActor(Integer idPelicula, Integer idActor) {
+        Actor actorActual = actoresDAO.buscarActorPorId(idActor);
+        Pelicula peliculaActual = peliculasDAO.buscarPeliculaPorId(idPelicula);
+        if (actorActual != null && peliculaActual != null) {
+            actorActual.removePelicula(peliculaActual);
+            actoresDAO.guardarActualizarActor(actorActual);
+        }
+    }
+
 }

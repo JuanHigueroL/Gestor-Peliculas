@@ -161,7 +161,7 @@ public class ActorController {
     }
 
     @PostMapping("/unirActorPelicula")
-    public String añadirPelicula(Model model, Integer id1,@RequestParam(name="ids", required=false) List<Integer> id2, RedirectAttributes attributes){
+    public String añadirPelicula(Model model, Integer id1,@RequestParam(name="ids", required=false) List<Integer> id2){
         List<Pelicula>peliculasActor = actorService.buscarPeliculasDeActor(id1);
         for (Pelicula p : peliculasActor) {
             if(peliculaService.buscarPeliculaPorId(p.getId())!=null && (p.getId() != null)) {
