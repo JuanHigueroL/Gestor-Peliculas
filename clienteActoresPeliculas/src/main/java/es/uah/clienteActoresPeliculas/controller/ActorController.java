@@ -161,7 +161,7 @@ public class ActorController {
     }
 
     @PostMapping("/unirActorPelicula")
-    public String añadirPelicula(Model model, Integer id1,@RequestParam(name="ids", required=false) List<Integer> id2){
+    public String añadirPelicula(Model model, Integer id1,@RequestParam(name="ids", required=false) List<Integer> id2, RedirectAttributes attributes) {
         List<Pelicula>peliculasActor = actorService.buscarPeliculasDeActor(id1);
         for (Pelicula p : peliculasActor) {
             if(peliculaService.buscarPeliculaPorId(p.getId())!=null && (p.getId() != null)) {
@@ -176,6 +176,7 @@ public class ActorController {
                 }
             }
         }
+        attributes.addFlashAttribute("mensajePeliculas", "La lista de películas en las que ha participado '"+actorService.buscarActorPorId(id1).getNombre()+ "' fueron modificadas");
         return "redirect:/actores";
     }
 

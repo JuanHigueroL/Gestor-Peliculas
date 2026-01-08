@@ -14,7 +14,7 @@
 
     <div class="header-left"></div>
 
-    <div class="header-center">
+    <div class="center-header">
         <h1>Gestión de Actores</h1>
     </div>
 
@@ -68,10 +68,10 @@
 
             <input type="hidden" th:field="*{id}"/>
 
-            <button type="submit" class="btn-guardar">Guardar Actor</button>
+            <button type="submit" class="btn btn-guardar">Guardar Actor</button>
 
             <div class="btn-volver-container">
-                <a th:href="@{/actores}" class="btn-volver">
+                <a th:href="@{/actores}" class="btn btn-volver" style="margin-top: 10px;">
                     Volver al menú de actores
                 </a>
             </div>

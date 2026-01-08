@@ -14,7 +14,7 @@
 
     <div class="header-left"></div>
 
-    <div class="header-center">
+    <div class="center-header">
         <h1>Gestión de Películas</h1>
     </div>
 
@@ -103,10 +103,10 @@
 
             <input type="hidden" th:field="*{id}"/>
 
-            <button type="submit" class="btn-guardar">Guardar Película</button>
+            <button type="submit" class=" btn btn-guardar">Guardar Película</button>
 
-            <div class="btn-volver-container">
-                <a th:href="@{/peliculas}" class="btn-volver">
+            <div class="btn-volver-container" style="margin-top: 10px;">
+                <a th:href="@{/peliculas}" class="btn btn-volver">
                     Volver al menú de películas
                 </a>
             </div>

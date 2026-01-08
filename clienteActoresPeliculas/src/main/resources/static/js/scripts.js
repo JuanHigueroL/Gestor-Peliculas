@@ -44,18 +44,18 @@ function closeAllSidebars() {
     const isDarkMode = localStorage.getItem('theme') === 'dark';
     // Aplicar el modo oscuro si estaba guardada
     if (isDarkMode) {
-        document.body.classList.add('dark-mode');
+        document.documentElement.classList.add('dark-mode');
         updateButtonText(true);
     }
 
 // Función para alternar el modo oscuro
 function toggleDarkMode() {
-    const body = document.body;
+    const root = document.documentElement;
     // Alternar modo oscuro
-    body.classList.toggle('dark-mode');
+    root.classList.toggle('dark-mode');
 
     // Guardar preferencia
-    if (body.classList.contains('dark-mode')) {
+    if (root.classList.contains('dark-mode')) {
         localStorage.setItem('theme', 'dark');
         updateButtonText(true);
     } else {

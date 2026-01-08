@@ -11,7 +11,8 @@
     </div>
 
     <div class="center-header">
-        <a class="main-title">CINEANDO</a>
+        <p>CINEANDO</p>
+        <!-- Pasa a activo dependiendo de la página en la que se encuentre -->
         <div class="sub-nav">
             <a th:href="@{/peliculas}" th:classappend="${seccion == 'peliculas' ? 'active' : ''}">Películas</a>
             <a th:href="@{/actores}" th:classappend="${seccion == 'actores' ? 'active' : ''}">Actor</a>

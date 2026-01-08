@@ -30,7 +30,7 @@
             <!-- Imagen y placeholder en caso de que no haya imagen -->
             <div class="detalle-img-container">
                 <img id="det-img" src="" alt="">
-                <div id="det-img-placeholder" class="placeholder-img" ></div>
+                <div id="det-img-placeholder" class="placeholder-pelicula-actual" ></div>
             </div>
 
             <!-- Información de la película seleccionada, se añade la información mediante el script de películas a los id det-->
@@ -48,22 +48,13 @@
                     <p id="det-sinopsis"></p>
                 </div>
 
-                <!-- Acciones de editar y borrar la película seleccionada, se aplica el enlace mediante el script películas -->
-                <div class="detalle-acciones">
-                    <a id="btn-editar-detalle" href="#" class="btn btn-editar">Editar</a>
-                    <a id="btn-borrar-detalle" href="#" class="btn btn-borrar"
-                       onclick="return confirm('¿Estás seguro de que deseas eliminar esta película?')">Borrar</a>
-                    <a id="btn btn-unirActor-pelicula" href="#" class="btn btn-unirActor">Cambiar relación con actores</a>
-                </div>
+            </div>
 
             </div>
 
-
-            </div>
-
+        <p class="contenido-invisible"><strong>Actores partícipes de la película:</strong></p>
             <!-- Listado de actores en tarjetas -->
         <div id="contenido-listado">
-            <p><strong>Actores partícipes de la película</strong></p>
 
             <!-- Se usa th:block para no generar divs innecesarios -->
             <!-- Bucle que recorre el mapa de actores por película -->
@@ -75,7 +66,7 @@
                      style="display: none;">
 
                     <!-- Bucle que recorre la lista de actores de las películas-->
-                    <div class="actor-card" th:each="actor : ${entry.value}">
+                    <div class="actores-card" th:each="actor : ${entry.value}">
                         <!-- Imagen del actor o placeholder en caso de que no haya imagen -->
                         <img th:if="${actor.imagen != null and actor.imagen != ''}"
                              th:src="${actor.imagen}"
@@ -99,6 +90,18 @@
                 </div>
             </th:block>
 
+
+
+        </div>
+
+        <div id="contenido-edicion-acciones">
+            <!-- Acciones de editar y borrar la película seleccionada, se aplica el enlace mediante el script películas -->
+            <div class="detalle-acciones">
+                <a id="btn-editar-detalle" href="#" class="btn btn-editar">Editar</a>
+                <a id="btn-borrar-detalle" href="#" class="btn btn-borrar"
+                   onclick="return confirm('¿Estás seguro de que deseas eliminar esta película?')">Borrar</a>
+                <a id="btn btn-unirActor-pelicula" href="#" class="btn btn-unirActor">Cambiar relación con actores</a>
+            </div>
         </div>
 
 
@@ -106,7 +109,7 @@
 
     <!-- Barra de acción para crear una nueva película -->
     <div class="action-bar">
-        <a th:href="@{/peliculas/nuevo}" class="btn-nuevo" title="Añadir nueva película">
+        <a th:href="@{/peliculas/nuevo}" class="btn btn-nuevo" title="Añadir nueva película">
             Crear Nueva Película
         </a>
     </div>

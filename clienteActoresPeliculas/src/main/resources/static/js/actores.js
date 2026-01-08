@@ -32,6 +32,8 @@ function mostrarDetalles(elemento) {
     document.getElementById('mensaje-vacio').style.display = 'none';
     document.getElementById('contenido-detalle').style.display = 'flex';
     document.getElementById('contenido-listado').style.display = 'flex';
+    document.getElementById('contenido-edicion-acciones').style.display = 'flex';
+    document.querySelector('.contenido-invisible').style.display = 'flex';
 
     // Scroll
     //document.getElementById('contenido-detalle').scrollIntoView({ behavior: 'smooth' });

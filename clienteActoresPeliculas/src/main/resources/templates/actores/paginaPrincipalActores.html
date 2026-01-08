@@ -41,19 +41,12 @@
                 <p><strong>País de origen:</strong> <span id="det-pais"></span></p>
                 <p><strong>Fecha de nacimiento:</strong> <span id="det-fecha"></span></p>
 
-                <!-- Acciones de editar, borrar y unir actor a película, se aplica el enlace mediante el script actores -->
-                <div class="detalle-acciones">
-                    <a id="btn-editar-actor" href="#" class="btn btn-editar">Editar</a>
-                    <a id="btn-borrar-actor" href="#" class="btn btn-borrar"
-                       onclick="return confirm('¿Estás seguro de que deseas eliminar este actor?')">Borrar</a>
-                    <a id="btn btn-unirPelicula-actor" href="#" class="btn btn-unirPelicula">Cambiar relación en películas</a>
-                </div>
             </div>
         </div>
 
+        <p class="contenido-invisible"><strong>Actores partícipes de la película:</strong></p>
         <!-- Listado de películas en las que participa el actor seleccionado -->
         <div id="contenido-listado">
-            <p><strong>Películas en las que participa</strong></p>
 
             <!-- Se usa th:block para no generar divs innecesarios -->
             <!-- Bucle que recorre el mapa de películas por actor -->
@@ -65,7 +58,7 @@
                      style="display: none;">
 
                     <!-- Bucle que recorre la lista de películas del actor-->
-                    <div class="pelicula-card" th:each="pelicula : ${entry.value}">
+                    <div class="movies-card" th:each="pelicula : ${entry.value}">
                         <!-- Imagen de la película o placeholder en caso de que no haya imagen -->
                         <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
                              th:src="${pelicula.imagen}"
@@ -91,12 +84,20 @@
 
         </div>
 
+        <div id="contenido-edicion-acciones">
+            <div class="detalle-acciones">
+            <a id="btn-editar-actor" href="#" class="btn btn-editar">Editar</a>
+            <a id="btn-borrar-actor" href="#" class="btn btn-borrar"
+               onclick="return confirm('¿Estás seguro de que deseas eliminar este actor?')">Borrar</a>
+            <a id="btn btn-unirPelicula-actor" href="#" class="btn btn-unirPelicula">Cambiar relación en películas</a>
+        </div>
+        </div>
 
     </section>
 
     <!-- Botón para crear un nuevo actor -->
     <div class="action-bar">
-        <a th:href="@{/actores/nuevo}" class="btn-nuevo" title="Añadir nuevo actor">
+        <a th:href="@{/actores/nuevo}" class="btn btn-nuevo" title="Añadir nuevo actor">
             Crear Nuevo Actor
         </a>
     </div>
