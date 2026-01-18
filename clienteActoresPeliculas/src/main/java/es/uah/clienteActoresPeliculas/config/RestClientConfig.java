@@ -14,7 +14,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @Configuration
 public class RestClientConfig {
 
-    @Value("${service.url}")
+    @Value("${peliculas.service.url}")
     private String serviceUrl;
 
     //Esta función (marcada como un @Bean) construye y configura el objeto RestClient estableciendo su URL base (http://localhost:8002)
@@ -25,7 +25,7 @@ public class RestClientConfig {
                 .build();
     }
 
-    //Sirve para hacer el cliente que usas luego
+    //Sirve para hacer el cliente que se usa luego
     @Bean
     public PeliculaClient peliculaClient(RestClient restClient) {
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
@@ -33,7 +33,7 @@ public class RestClientConfig {
         return factory.createClient(PeliculaClient.class);
     }
 
-    //Sirve para hacer el cliente que usas luego
+    //Sirve para hacer el cliente que se usa luego
     @Bean
     public ActorClient actorClient(RestClient restClient) {
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
