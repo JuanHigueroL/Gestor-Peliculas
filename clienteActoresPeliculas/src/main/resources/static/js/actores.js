@@ -20,7 +20,7 @@ function mostrarDetalles(elemento) {
     const placeholderElement = document.getElementById('default-user-icon');
 
     if (data.imagen && data.imagen !== '') {
-        imgElement.src = data.imagen;
+        imgElement.src ='/actores/uploads/' + data.imagen;
         imgElement.style.display = 'block';
         placeholderElement.style.display = 'none';
     } else {

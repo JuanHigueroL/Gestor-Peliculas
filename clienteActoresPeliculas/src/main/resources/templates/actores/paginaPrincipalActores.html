@@ -61,7 +61,7 @@
                     <div class="movies-card" th:each="pelicula : ${entry.value}">
                         <!-- Imagen de la película o placeholder en caso de que no haya imagen -->
                         <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
-                             th:src="${pelicula.imagen}"
+                             th:src="@{'/peliculas/uploads/'+${pelicula.imagen}}"
                              alt="Póster película"
                              class="card-img">
 
@@ -116,7 +116,7 @@
 
             <!-- Se muestra la imagen y en su defecto un placeholder, el título y año de la misma -->
             <img th:if="${actor.imagen != null and actor.imagen != ''}"
-                 th:src="${actor.imagen}" alt="Cartel">
+                 th:src="@{'/actores/uploads/'+${actor.imagen}}" alt="Cartel">
 
             <div th:unless="${actor.imagen != null and actor.imagen != ''}">
                 <svg class="default-user-icon" viewBox="0 0 24 24">

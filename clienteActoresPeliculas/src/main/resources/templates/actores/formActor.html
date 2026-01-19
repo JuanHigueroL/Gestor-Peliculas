@@ -30,7 +30,7 @@
 
         <h2 th:text="${titulo}">Formulario de Actor</h2>
 
-        <form th:action="@{/actores/guardar}" method="post" th:object="${actor}">
+        <form th:action="@{/actores/guardar}" method="post" th:object="${actor}" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="nombre">Nombre Completo</label>
@@ -58,17 +58,19 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="imagen">URL de la Imagen (Portada)</label>
-                <input type="url"
-                       th:field="*{imagen}"
-                       id="imagen"
-                       placeholder="https://...">
+
+
+            <div>
+                <label for="file">Imagen</label>
+                <div>
+                    <input type="file" id="file" name="file"/>
+                </div>
             </div>
 
             <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{imagen}"/>
 
-            <button type="submit" class="btn btn-guardar">Guardar Actor</button>
+            <button type="submit" class="btn btn-guardar" style="margin-top: 10px;">Guardar Actor</button>
 
             <div class="btn-volver-container">
                 <a th:href="@{/actores}" class="btn btn-volver" style="margin-top: 10px;">

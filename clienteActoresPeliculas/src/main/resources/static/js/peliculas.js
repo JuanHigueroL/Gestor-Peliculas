@@ -23,7 +23,7 @@ function mostrarDetalles(elemento) {
     const placeholderElement = document.getElementById('det-img-placeholder');
 
     if (data.imagen && data.imagen !== '') {
-        imgElement.src = data.imagen;
+        imgElement.src = '/peliculas/uploads/'+ data.imagen;
         imgElement.style.display = 'block';
         placeholderElement.style.display = 'none';
     } else {

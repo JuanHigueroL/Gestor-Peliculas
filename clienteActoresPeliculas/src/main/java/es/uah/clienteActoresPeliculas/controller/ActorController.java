@@ -3,18 +3,25 @@ package es.uah.clienteActoresPeliculas.controller;
 import es.uah.clienteActoresPeliculas.model.Pelicula;
 import es.uah.clienteActoresPeliculas.paginator.PageRender;
 import es.uah.clienteActoresPeliculas.service.IPeliculaService;
+import es.uah.clienteActoresPeliculas.service.IUploadFileService;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import es.uah.clienteActoresPeliculas.model.Actor;
 import es.uah.clienteActoresPeliculas.service.IActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.*;
 
 @Controller
@@ -26,6 +33,32 @@ public class ActorController {
 
     @Autowired
     IPeliculaService peliculaService;
+
+    @Autowired
+    private IUploadFileService uploadFileService;
+
+    //Se añade .+ para agregar las extensiones de archivos, ya que Spring Boot las elimina
+    //ResponseEntity<Resource>: Devuelve una respuesta http con el archivo físico que lleva dentro
+    @GetMapping("/uploads/{filename:.+}")
+    public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
+
+        //Crea un recurso vacío
+        Resource recurso = null;
+
+        try {
+            //Uso de la función load para dejar listo el archivo
+            recurso = uploadFileService.load(filename);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        //Manda la imagen encontrada
+        //attachment hace que la descargue el usuario
+        //filename + recurso.Filename le dice que con que nombre guardarlo
+        //body(recurso) le manda el archivo físico que tiene que mostrar
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
+                .body(recurso);
+    }
 
     @GetMapping(value= {"", "/", "/listado"})
     public String inicio(Model model, @RequestParam(name="page", defaultValue="0") int page) {
@@ -118,7 +151,27 @@ public class ActorController {
 
 
     @PostMapping("/guardar")
-    public String guardarActor(Model model, Actor actor, RedirectAttributes attributes) {
+    public String guardarActor(Model model, Actor actor, @RequestParam("file") MultipartFile foto, RedirectAttributes attributes) {
+
+        if(!foto.isEmpty()){
+            //Si existe la pelicula y tiene imagen la eliminamos de los archivos
+            if (actor.getId()!=null && actor.getId()>0 && actor.getImagen()!=null && actor.getImagen().length()>0){
+                uploadFileService.delete(actor.getImagen());
+            }
+
+            //Guardamos la nueva imagen en la carpeta y guardamos su nombre
+            String uniqueFilename =null;
+            try {
+                uniqueFilename= uploadFileService.copy(foto);
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+
+            //Le damos a la pelicula la nueva imagen dada
+            actor.setImagen(uniqueFilename);
+
+        }
+
         if(actor.getId()!=null && actor.getId()>0){
             actorService.actualizarActor(actor);
             attributes.addFlashAttribute("mensajeActualizado","El actor fue actualizado");
@@ -140,6 +193,8 @@ public class ActorController {
     @GetMapping("/borrar/{id}")
     public String eliminarActor(Model model, @PathVariable("id") Integer id, RedirectAttributes attributes) {
         String nombreActor = actorService.buscarActorPorId(id).getNombre();
+        //Se elimina la imagen de los archivos que tiene la película
+        uploadFileService.delete(actorService.buscarActorPorId(id).getImagen());
         actorService.eliminarActor(id);
         attributes.addFlashAttribute("mensajeBorrado", "Los datos del actor con id '"+id+"' y nombre '"+nombreActor+ "' fueron borrados!");
         return "redirect:/actores";

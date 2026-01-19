@@ -69,7 +69,7 @@
                     <div class="actores-card" th:each="actor : ${entry.value}">
                         <!-- Imagen del actor o placeholder en caso de que no haya imagen -->
                         <img th:if="${actor.imagen != null and actor.imagen != ''}"
-                             th:src="${actor.imagen}"
+                             th:src="@{'/actores/uploads/'+${actor.imagen}}"
                              alt="Foto actor"
                              class="card-img">
 
@@ -132,7 +132,7 @@
 
             <!-- Se muestra la imagen y en su defecto un placeholder, el título y año de la misma -->
             <img th:if="${pelicula.imagen != null and pelicula.imagen != ''}"
-                 th:src="${pelicula.imagen}" alt="Cartel">
+                 th:src="@{'/peliculas/uploads/'+${pelicula.imagen}}" alt="Cartel">
 
             <div th:unless="${pelicula.imagen != null and pelicula.imagen != ''}"
                  class="placeholder-img"></div>
