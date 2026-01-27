@@ -1,7 +1,6 @@
 package es.uah.clienteActoresPeliculas.config;
 
-import es.uah.clienteActoresPeliculas.client.ActorClient;
-import es.uah.clienteActoresPeliculas.client.PeliculaClient;
+import es.uah.clienteActoresPeliculas.client.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +40,26 @@ public class RestClientConfig {
         return factory.createClient(ActorClient.class);
     }
 
+    @Bean
+    public UserClient userClient(RestClient restClient) {
+        RestClientAdapter adapter = RestClientAdapter.create(restClient);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        return factory.createClient(UserClient.class);
+    }
+
+    @Bean
+    public OpinionClient opinionClient(RestClient restClient) {
+        RestClientAdapter adapter = RestClientAdapter.create(restClient);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        return factory.createClient(OpinionClient.class);
+    }
+
+    @Bean
+    public AuthorityClient authorityClient(RestClient restClient) {
+        RestClientAdapter adapter = RestClientAdapter.create(restClient);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        return factory.createClient(AuthorityClient.class);
+    }
 
 
 }

@@ -23,6 +23,11 @@ public class UserController {
         return userService.buscarPorId(idUser);
     }
 
+    @GetMapping("/user/login/{username}/{password}")
+    public User buscarPorUsernameAndPassword(@PathVariable("username") String username, @PathVariable("password") String password) {
+        return userService.buscarPorUsernameAndPassword(username, password);
+    }
+
     @PostMapping("/user/guardar")
     public void guardarUser(@RequestBody User user){
         userService.guardarUser(user);

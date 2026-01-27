@@ -24,6 +24,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User buscarPorUsernameAndPassword(String user, String clave) {
+        return userDAO.buscarPorUsernameAndPassword(user, clave);
+    }
+
+    @Override
     public void guardarUser(User user) {
         if (user.getId() == null || user.getId() == 0) {
             user.setId(null);

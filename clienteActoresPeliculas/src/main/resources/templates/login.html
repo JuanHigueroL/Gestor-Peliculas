@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Películas y Actores</title>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}"> <!-- CSS General -->
+</head>
+<body>
+
+<div th:if="${userFailed != null}" class="alerta alerta-actualizado">
+  <span th:text="${userFailed}"></span>
+  <span class="cerrar-alerta" onclick="this.parentElement.style.display='none';">&times;</span>
+</div>
+
+<div>
+  <div>
+    <h2>Catálogo de Películas</h2>
+    <h3>Iniciar Sesión</h3>
+
+    <div th:if="${param.error}">
+      Usuario o contraseña incorrectos.
+    </div>
+    <div th:if="${param.logout}">
+      Has cerrado sesión correctamente.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+      <div>
+        <input type="text" name="username" placeholder="Nombre de usuario" autofocus required/>
+      </div>
+
+      <div>
+        <input type="password" name="password" placeholder="Contraseña" required/>
+      </div>
+
+      <button type="submit">Entrar</button>
+    </form>
+
+    <div></div>
+
+    <h3>¿No tienes cuenta?</h3>
+    <a th:href="@{/registro}">Crear nuevo usuario</a>
+  </div>
+</div>
+
+<div class="btn-volver-container" style="margin-top: 10px;">
+  <a th:href="@{/peliculas}" class="btn btn-volver">
+    Volver al menú de películas
+  </a>
+</div>
+
+</body>
+</html>

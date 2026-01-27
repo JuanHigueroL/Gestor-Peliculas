@@ -24,6 +24,16 @@ public class UserDAOImpl implements IUserDAO {
     }
 
     @Override
+    public User buscarPorUsernameAndPassword(String user, String clave) {
+        Optional <User> usuario = Optional.ofNullable(userJPA.findByUsernameAndPassword(user, clave));
+        if (usuario.isPresent()) {
+            return usuario.get();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public void guardarActualizarUser(User user) {
         userJPA.save(user);
     }

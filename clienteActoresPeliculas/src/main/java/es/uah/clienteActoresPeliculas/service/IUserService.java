@@ -1,8 +1,9 @@
-package es.uah.usuariosOpinionesEureka.service;
+package es.uah.clienteActoresPeliculas.service;
 
-import es.uah.usuariosOpinionesEureka.model.User;
+import es.uah.clienteActoresPeliculas.model.User;
 
 import java.util.List;
+
 
 public interface IUserService {
     List<User> buscarTodos();

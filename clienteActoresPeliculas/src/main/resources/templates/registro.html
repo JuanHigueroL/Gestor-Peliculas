@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro | Películas y Actores</title>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}"> <!-- CSS General -->
+</head>
+<body>
+
+<div>
+  <div>
+
+    <h2>Registro de Usuario</h2>
+
+    <form th:action="@{/registrado}" method="post" th:object="${usuario}">
+
+      <div th:if="${#fields.hasErrors('*')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+        </ul>
+      </div>
+
+      <div>
+        <label for="usernamee">Nombre de Usuario</label>
+        <input type="text" th:field="*{username}" id="usernamee" placeholder="Ej: pepe_garcia" required>
+      </div>
+
+      <div>
+        <label for="passwordd">Contraseña</label>
+        <input type="password" th:field="*{password}" id="passwordd" placeholder="Mínimo 8 caracteres" required>
+      </div>
+
+      <div>
+        <label for="correoo">Correo Electrónico</label>
+        <input type="email" th:field="*{correo}" id="correoo" placeholder="correo@ejemplo.com" required>
+      </div>
+
+      <div>
+        <label for="rol">Selecciona tu Rol</label>
+        <select name="rolId" id="rol" required>
+          <option value="" disabled selected>-- Elige un rol --</option>
+          <option th:each="r : ${listaRoles}"
+                  th:value="${r.id}"
+                  th:text="${r.authority}"></option> </select>
+      </div>
+
+      <button type="submit">Registrarse</button>
+    </form>
+
+    <a th:href="@{/login}">Volver al Login</a>
+  </div>
+</div>
+
+<div class="btn-volver-container" style="margin-top: 10px;">
+  <a th:href="@{/peliculas}" class="btn btn-volver">
+    Volver al menú de películas
+  </a>
+</div>
+
+</body>
+</html>

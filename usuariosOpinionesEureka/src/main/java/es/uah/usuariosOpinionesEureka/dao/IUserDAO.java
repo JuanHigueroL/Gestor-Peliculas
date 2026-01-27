@@ -10,6 +10,8 @@ public interface IUserDAO {
 
     User buscarPorId(int id);
 
+    User buscarPorUsernameAndPassword(String user, String clave);
+
     void guardarActualizarUser(User user);
 
     void eliminarUser(int idUser);
