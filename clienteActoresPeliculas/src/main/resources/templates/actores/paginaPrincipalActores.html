@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Cineando - Gestión de Actores</title>
     <link rel="stylesheet" th:href="@{/css/estilos.css}"> <!-- CSS General -->
@@ -86,10 +86,10 @@
 
         <div id="contenido-edicion-acciones">
             <div class="detalle-acciones">
-            <a id="btn-editar-actor" href="#" class="btn btn-editar">Editar</a>
-            <a id="btn-borrar-actor" href="#" class="btn btn-borrar"
-               onclick="return confirm('¿Estás seguro de que deseas eliminar este actor?')">Borrar</a>
-            <a id="btn btn-unirPelicula-actor" href="#" class="btn btn-unirPelicula">Cambiar relación en películas</a>
+            <a id="btn-editar-actor" href="#" class="btn btn-editar" sec:authorize="hasAuthority('ROLE_ADMIN')">Editar</a>
+            <a id="btn-borrar-actor" href="#"  class="btn btn-borrar" sec:authorize="hasAuthority('ROLE_ADMIN')"
+               onclick="return confirm('¿Estás seguro de que deseas eliminar este actor?')" >Borrar</a>
+            <a id="btn-btn-unirPelicula-actor" href="#" class="btn btn-unirPelicula" sec:authorize="hasAuthority('ROLE_ADMIN')">Cambiar relación en películas</a>
         </div>
         </div>
 
@@ -97,7 +97,7 @@
 
     <!-- Botón para crear un nuevo actor -->
     <div class="action-bar">
-        <a th:href="@{/actores/nuevo}" class="btn btn-nuevo" title="Añadir nuevo actor">
+        <a th:href="@{/actores/nuevo}" class="btn btn-nuevo" title="Añadir nuevo actor" sec:authorize="hasAuthority('ROLE_ADMIN')">
             Crear Nuevo Actor
         </a>
     </div>

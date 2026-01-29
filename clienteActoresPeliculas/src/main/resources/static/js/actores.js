@@ -11,10 +11,21 @@ function mostrarDetalles(elemento) {
     document.getElementById('det-pais').innerText = data.pais ? data.pais : "Desconocido";
     document.getElementById('det-fecha').innerText = data.fecha ? data.fecha : "Desconocida";
     //Actualizar botones de editar y borrar
-    document.getElementById('btn-editar-actor').href = '/actores/editar/' + data.id;
-    document.getElementById('btn-borrar-actor').href = '/actores/borrar/' + data.id;
-    document.getElementById('btn btn-unirPelicula-actor').href ='/actores/unirPelicula/'+ data.id;
+    const btnEditarActor = document.getElementById('btn-editar-actor');
+    if (btnEditarActor) {
+        btnEditarActor.href = '/actores/editar/' + data.id;
+    }
 
+    const btnBorrarActor = document.getElementById('btn-borrar-actor');
+    if (btnBorrarActor) {
+        btnBorrarActor.href = '/actores/borrar/' + data.id;
+    }
+
+    // OJO: Aquí he corregido el ID también (quitando los espacios) para que coincida con el HTML arreglado
+    const btnUnirPelicula = document.getElementById('btn-btn-unirPelicula-actor');
+    if (btnUnirPelicula) {
+        btnUnirPelicula.href = '/actores/unirPelicula/' + data.id;
+    }
     // Gestión de la imagen
     const imgElement = document.getElementById('det-img');
     const placeholderElement = document.getElementById('default-user-icon');

@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-//COnfiguration le dice a Spring que lea este archivo nada más arrancar, porque aquí hay configuraciones críticas del sistema
+//Configuration le dice a Spring que lea este archivo nada más arrancar, porque aquí hay configuraciones críticas del sistema
 //@EnableWebSecurity habilita la seguridad web en la aplicación
 @Configuration
 @EnableWebSecurity
@@ -33,18 +33,83 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable()) // Desactivar CSRF para evitar problemas en formularios
+                .authorizeHttpRequests(auth -> auth
+
+                        // -----------------------------------------------------------------
+                        // 1. ZONA ADMIN (Restricciones Específicas)
+                        // -----------------------------------------------------------------
+
+                        // Acciones de Actores (Admin)
+                        .requestMatchers(
+                                "/actores/nuevo",
+                                "/actores/guardar",
+                                "/actores/editar/**",
+                                "/actores/borrar/**",
+                                "/actores/unirPelicula/**",
+                                "/actores/unirActorPelicula"
+                        ).hasAuthority("ROLE_ADMIN")
+
+                        // Acciones de Películas (Admin)
+                        .requestMatchers(
+                                "/peliculas/nuevo",
+                                "/peliculas/guardar",
+                                "/peliculas/editar/**",
+                                "/peliculas/borrar/**",
+                                "/peliculas/unirActor/**",
+                                "/peliculas/unirPeliculaActor"
+                        ).hasAuthority("ROLE_ADMIN")
+
+                        // -----------------------------------------------------------------
+                        // ZONA PÚBLICA / CUALQUIER USUARIO
+                        // -----------------------------------------------------------------
+                        .requestMatchers(
+                                "/js/**", "/css/**", "/img/**",
+                                "/login",
+                                "/registro",
+                                "/registrado",
+                                "/sidebarActores",
+                                "/sidebarPeliculas",
+                                "/peliculas",
+                                "/actores",
+                                "/actores/uploads/**",
+                                "/peliculas/uploads/**",
+                                "/peliculas",
+                                "/peliculas/",
+                                "/peliculas/listado",
+                                "/peliculas/id/**",
+                                "/peliculas/{id}",
+                                "/peliculas/actor/**",
+                                "/peliculas/genero/**",
+                                "/peliculas/titulo/**",
+
+                                // --- ACTORES: Vistas públicas y Filtros ---
+                                "/actores",
+                                "/actores/",
+                                "/actores/listado",
+                                "/actores/id/**",
+                                "/actores/{id}",
+                                "/actores/pais/**",
+                                "/actores/nombre/**"
+                        ).permitAll()
+
+                        // -----------------------------------------------------------------
+                        // EL RESTO
+                        // -----------------------------------------------------------------
+                        // Cualquier otra ruta requiere login por defecto.
+                        .anyRequest().authenticated()
+                )
                 .formLogin(form -> form
                         .loginPage("/login").permitAll()
-                        // Redirige a /peliculas al loguearse con éxito
-                        .defaultSuccessUrl("/peliculas", true))
-                .authorizeHttpRequests((authz) -> authz
-                        // Las rutas públicas ahora son  /peliculas y /actores
-                        .requestMatchers("/js/**", "/css/**", "/img/**", "/login", "/registro","/registrado","sidebarActores","sidebarPeliculas", "/peliculas", "/actores").permitAll()
-                        // LO DEMÁS requiere LOGIN
-                        .anyRequest().authenticated()
+                        .defaultSuccessUrl("/peliculas", true) // Redirige aquí al entrar
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout").permitAll()
                 );
+
         return http.build();
     }
+
 
 }

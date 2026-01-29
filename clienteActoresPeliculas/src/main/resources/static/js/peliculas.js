@@ -15,9 +15,22 @@ function mostrarDetalles(elemento) {
     document.getElementById('det-direccion').innerText = data.direccion ? data.direccion : "Desconocida";
     document.getElementById('det-sinopsis').innerText = data.sinopsis ? data.sinopsis : "No disponible";
     // Actualizar botones de editar y borrar
-    document.getElementById('btn-editar-detalle').href = '/peliculas/editar/' + data.id;
-    document.getElementById('btn-borrar-detalle').href = '/peliculas/borrar/' + data.id;
-    document.getElementById('btn btn-unirActor-pelicula').href ='/peliculas/unirActor/'+ data.id;
+    const btnEditar = document.getElementById('btn-editar-detalle');
+    if (btnEditar) {
+        btnEditar.href = '/peliculas/editar/' + data.id;
+    }
+
+    const btnBorrar = document.getElementById('btn-borrar-detalle');
+    if (btnBorrar) {
+        btnBorrar.href = '/peliculas/borrar/' + data.id;
+    }
+
+    // OJO: He corregido el ID aquí para quitarle los espacios
+    const btnUnir = document.getElementById('btn-btn-unirActor-pelicula');
+    if (btnUnir) {
+        // Asumiendo que esta es la ruta correcta
+        btnUnir.href = '/peliculas/unirActor/' + data.id;
+    }
     // Gestión de la imagen
     const imgElement = document.getElementById('det-img');
     const placeholderElement = document.getElementById('det-img-placeholder');

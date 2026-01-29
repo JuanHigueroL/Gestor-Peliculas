@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="es">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
 <head>
     <title>Cineando - Gestión de películas</title>
     <link rel="stylesheet" th:href="@{/css/estilos.css}"> <!-- CSS General -->
@@ -97,10 +97,10 @@
         <div id="contenido-edicion-acciones">
             <!-- Acciones de editar y borrar la película seleccionada, se aplica el enlace mediante el script películas -->
             <div class="detalle-acciones">
-                <a id="btn-editar-detalle" href="#" class="btn btn-editar">Editar</a>
-                <a id="btn-borrar-detalle" href="#" class="btn btn-borrar"
+                <a id="btn-editar-detalle" href="#" class="btn btn-editar" sec:authorize="hasAuthority('ROLE_ADMIN')">Editar</a>
+                <a id="btn-borrar-detalle" href="#" class="btn btn-borrar" sec:authorize="hasAuthority('ROLE_ADMIN')"
                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta película?')">Borrar</a>
-                <a id="btn btn-unirActor-pelicula" href="#" class="btn btn-unirActor">Cambiar relación con actores</a>
+                <a id="btn-btn-unirActor-pelicula"  href="#" class="btn btn-unirActor" sec:authorize="hasAuthority('ROLE_ADMIN')">Cambiar relación con actores</a>
             </div>
         </div>
 
@@ -109,7 +109,7 @@
 
     <!-- Barra de acción para crear una nueva película -->
     <div class="action-bar">
-        <a th:href="@{/peliculas/nuevo}" class="btn btn-nuevo" title="Añadir nueva película">
+        <a th:href="@{/peliculas/nuevo}" class="btn btn-nuevo" sec:authorize="hasAuthority('ROLE_ADMIN')" title="Añadir nueva película">
             Crear Nueva Película
         </a>
     </div>

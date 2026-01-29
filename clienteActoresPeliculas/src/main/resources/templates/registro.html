@@ -3,59 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <title>Registro | Películas y Actores</title>
-  <link rel="stylesheet" th:href="@{/css/estilos.css}"> <!-- CSS General -->
+  <link rel="stylesheet" th:href="@{/css/estilos.css}"> <script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark-mode');
+  }
+</script>
 </head>
 <body>
 
-<div>
-  <div>
+<div onclick="toggleDarkMode()" class="btn-tema-flotante"
+     style="position: absolute; top: 20px; right: 20px; display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; background: var(--bg-tarjeta); border-radius: 30px; box-shadow: 0 2px 5px var(--sombra); user-select: none; border: 1px solid var(--borde-color);">
+
+  <svg id="icono-luna" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+  <svg id="icono-sol" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+  <span id="textoModo" style="font-size: 0.9rem; font-weight: 600;">Modo Oscuro</span>
+</div>
+
+<div class="form-container">
+
+  <div class="form-card">
 
     <h2>Registro de Usuario</h2>
 
     <form th:action="@{/registrado}" method="post" th:object="${usuario}">
 
-      <div th:if="${#fields.hasErrors('*')}">
-        <ul>
+      <div th:if="${#fields.hasErrors('*')}" class="alerta alerta-error" style="text-align: left; margin-bottom: 20px;">
+        <ul style="margin: 0; padding-left: 20px;">
           <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
         </ul>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="usernamee">Nombre de Usuario</label>
         <input type="text" th:field="*{username}" id="usernamee" placeholder="Ej: pepe_garcia" required>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="passwordd">Contraseña</label>
         <input type="password" th:field="*{password}" id="passwordd" placeholder="Mínimo 8 caracteres" required>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="correoo">Correo Electrónico</label>
         <input type="email" th:field="*{correo}" id="correoo" placeholder="correo@ejemplo.com" required>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="rol">Selecciona tu Rol</label>
         <select name="rolId" id="rol" required>
           <option value="" disabled selected>-- Elige un rol --</option>
           <option th:each="r : ${listaRoles}"
                   th:value="${r.id}"
-                  th:text="${r.authority}"></option> </select>
+                  th:text="${r.authority}"></option>
+        </select>
       </div>
 
-      <button type="submit">Registrarse</button>
+      <button type="submit" class="btn btn-editar" style="width: 100%; margin-top: 15px; font-size: 1.1em;">
+        Registrarse
+      </button>
     </form>
 
-    <a th:href="@{/login}">Volver al Login</a>
-  </div>
-</div>
+    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--borde-color);">
+      <p style="margin-bottom: 10px; color: var(--color-texto-sec);">¿Ya tienes cuenta?</p>
+      <a th:href="@{/login}" class="btn"
+         style="background-color: transparent; border: 1px solid var(--borde-color); color: var(--color-texto); width: 100%; box-sizing: border-box;">
+        Volver al Login
+      </a>
+    </div>
 
-<div class="btn-volver-container" style="margin-top: 10px;">
+  </div> <div class="btn-volver-container" style="margin-top: 20px;">
   <a th:href="@{/peliculas}" class="btn btn-volver">
-    Volver al menú de películas
+    Volver al catálogo
   </a>
 </div>
+
+</div> <script th:src="@{/js/scripts.js}"></script>
 
 </body>
 </html>

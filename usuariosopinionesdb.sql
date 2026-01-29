@@ -42,6 +42,9 @@ CREATE TABLE IF NOT EXISTS `Users` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO `usuariosopinionesdbsec`.`authorities` (idRol, authority) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO `usuariosopinionesdbsec`.`authorities` (idRol, authority) VALUES (2, 'ROLE_USER');
+
 
 -- -----------------------------------------------------
 -- Table `Opiniones` 
