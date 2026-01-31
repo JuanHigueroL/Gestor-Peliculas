@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Usuarios | Formulario</title>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}">
+
+</head>
+<body>
+
+<header>
+  <div th:replace="~{ajustes :: #sidebar-ajustes}"></div>
+
+  <div id="sidebar" class="sidebar-busqueda">
+    <div class="sidebar-header">
+      <h3>Búsqueda</h3>
+      <button class="btn-cerrar" onclick="toggleSidebar()">&times;</button>
+    </div>
+  </div>
+  <div id="overlay" class="overlay" onclick="closeAllSidebars()"></div>
+
+  <div class="header-left"></div>
+
+  <div class="center-header">
+    <h1>Gestión de Usuarios</h1>
+  </div>
+
+  <div class="settings-box" onclick="toggleSettingsSidebar()" style="cursor: pointer;">
+    <svg class="icon" viewBox="0 0 24 24">
+      <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .43-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+    </svg>
+  </div>
+</header>
+
+<div class="form-container">
+  <div class="form-card">
+
+    <h2 th:text="${titulo}">Formulario de Usuario</h2>
+
+    <form th:action="@{/user/guardar}" method="post" th:object="${usuario}">
+
+      <input type="hidden" th:field="*{id}"/>
+
+      <div class="form-group">
+        <label for="username">Nombre de Usuario</label>
+        <input type="text"
+               th:field="*{username}"
+               id="username"
+               placeholder="Ej: pepe_garcia"
+               required>
+        <small class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Correo Electrónico</label>
+        <input type="email"
+               th:field="*{correo}"
+               id="correo"
+               placeholder="ejemplo@cineando.com"
+               required>
+        <small class="field-error" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="text"
+               th:field="*{password}"
+               id="password"
+               placeholder="Contraseña del usuario"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="rol">Rol / Permisos</label>
+        <select name="rolId" id="rol" required>
+          <option th:each="r : ${listaRoles}"
+                  th:value="${r.id}"
+                  th:text="${r.authority}"
+                  th:selected="${usuario.rol != null and r.id == usuario.rol.id}">
+          </option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-guardar" style="width: 100%; margin-top: 20px;">
+        Guardar Cambios
+      </button>
+
+      <div class="btn-volver-container" style="margin-top: 15px;">
+        <a th:href="@{/user}" class="btn btn-volver">
+          Cancelar y Volver
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script th:src="@{/js/scripts.js}"></script>
+
+</body>
+</html>
