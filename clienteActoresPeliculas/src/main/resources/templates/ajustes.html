@@ -48,6 +48,21 @@
                 </div>
             </li>
 
+            <li sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <div>
+                    <a th:href="@{/opinions/gestion}" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+
+                        <span>Gestión de Opiniones</span>
+                    </a>
+                </div>
+            </li>
+
+
+
             <li sec:authorize="!isAuthenticated()">
                 <div>
                     <a th:href="@{/login}" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">

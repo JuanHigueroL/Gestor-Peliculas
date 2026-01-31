@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/opinions")
 public class OpinionController {
@@ -67,4 +69,19 @@ public class OpinionController {
 
         return "redirect:/peliculas";
     }
+
+    @GetMapping("/gestion") // Ejemplo de ruta: /opinions/gestion
+    public String gestionOpiniones(Model model) {
+        List<Opinion> todasLasOpiniones = opinionService.buscarTodos(); // Necesitas este método en el servicio
+        model.addAttribute("titulo", "Gestión de Opiniones");
+        model.addAttribute("listadoOpiniones", todasLasOpiniones);
+        return "opiniones/paginaPrincipalOpiniones";
+    }
+
+    @GetMapping("/borrar/{id}")
+    public String borrarOpinionAdmin(@PathVariable("id") Integer id) {
+        opinionService.eliminarOpinion(id);
+        return "redirect:/opinions/gestion";
+    }
+
 }
