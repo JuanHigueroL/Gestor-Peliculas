@@ -15,6 +15,9 @@ public interface UserClient {
     @GetExchange("/{id}")
     User buscarPorId(@PathVariable("id") int idUser);
 
+    @GetExchange("/username/{username}")
+    User buscarPorUsername(@PathVariable("username") String username);
+
     @GetExchange("/login/{username}/{password}")
     User login(@PathVariable("username") String username, @PathVariable("password") String password);
 

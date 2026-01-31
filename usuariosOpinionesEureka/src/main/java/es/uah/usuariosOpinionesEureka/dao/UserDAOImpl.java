@@ -34,6 +34,11 @@ public class UserDAOImpl implements IUserDAO {
     }
 
     @Override
+    public User buscarPorUsername(String username) {
+        return userJPA.findByUsername(username);
+    }
+
+    @Override
     public void guardarActualizarUser(User user) {
         userJPA.save(user);
     }

@@ -28,6 +28,11 @@ public class UserController {
         return userService.buscarPorUsernameAndPassword(username, password);
     }
 
+    @GetMapping("/user/username/{username}")
+    public User buscarPorUsername(@PathVariable("username") String username) {
+        return userService.buscarPorUsername(username);
+    }
+
     @PostMapping("/user/guardar")
     public void guardarUser(@RequestBody User user){
         userService.guardarUser(user);

@@ -138,7 +138,12 @@
                 <a id="btn-borrar-detalle" href="#" class="btn btn-borrar" sec:authorize="hasAuthority('ROLE_ADMIN')"
                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta película?')">Borrar</a>
                 <a id="btn-btn-unirActor-pelicula"  href="#" class="btn btn-unirActor" sec:authorize="hasAuthority('ROLE_ADMIN')">Cambiar relación con actores</a>
-            </div>
+                <a id="btn-btn-puntuar-pelicula"
+                   href="#"
+                   class="btn btn-puntuarActor"
+                   sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')">
+                    Añadir voto
+                </a>            </div>
         </div>
 
 

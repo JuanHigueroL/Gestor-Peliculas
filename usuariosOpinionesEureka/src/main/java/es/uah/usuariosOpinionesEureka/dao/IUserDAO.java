@@ -12,6 +12,8 @@ public interface IUserDAO {
 
     User buscarPorUsernameAndPassword(String user, String clave);
 
+    User buscarPorUsername(String username);
+
     void guardarActualizarUser(User user);
 
     void eliminarUser(int idUser);

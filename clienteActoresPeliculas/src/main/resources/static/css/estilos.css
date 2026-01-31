@@ -469,7 +469,7 @@ header p {
     background-color: var(--btn-rojo);
 }
 
-.btn-unirPelicula , .btn-unirActor {
+.btn-unirPelicula , .btn-unirActor, .btn-puntuarActor{
     background-color: var(--btn-verde);
 }
 

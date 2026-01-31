@@ -5,8 +5,8 @@
 function mostrarDetalles(elemento) {
     // Obtener datos del dataset
     const data = elemento.dataset;
-    // Rellenar textos
 
+    // Rellenar textos
     document.getElementById('det-id').innerText = data.id ? data.id : "Desconocido";
     document.getElementById('det-titulo').innerText = data.titulo ? data.titulo : "Desconocido";
     document.getElementById('det-anio').innerText = data.anio ? data.anio : "Desconocido";
@@ -15,39 +15,39 @@ function mostrarDetalles(elemento) {
     document.getElementById('det-genero').innerText = data.genero ? data.genero : "Desconocido";
     document.getElementById('det-direccion').innerText = data.direccion ? data.direccion : "Desconocida";
     document.getElementById('det-sinopsis').innerText = data.sinopsis ? data.sinopsis : "No disponible";
-    document.getElementById('det-sinopsis').innerText = data.sinopsis ? data.sinopsis : "No disponible";
 
-    // --- NUEVO CÓDIGO PARA LA PUNTUACIÓN ---
+    // --- LÓGICA DE PUNTUACIÓN (CORREGIDA) ---
     const puntuacionElement = document.getElementById('det-puntuacion');
-    const nota = parseFloat(data.puntuacion); // Convertimos el texto a número decimal
+    const nota = parseFloat(data.puntuacion);
 
-    if (nota && nota >= 0) {
-        // Si hay nota: Ponemos Estrella + Nota con 1 decimal + /10
+    // Usamos !isNaN para que el 0 cuente como nota válida
+    if (!isNaN(nota) && nota >= 0) {
         puntuacionElement.innerText = "★ " + nota.toFixed(1) + " / 10";
-        puntuacionElement.style.color = "#f5c518"; // Amarillo dorado
+        puntuacionElement.style.color = "#f5c518";
+        puntuacionElement.style.display = "flex"; // Aseguramos que se vea
     } else {
-        // Si es menor a 0 o null
         puntuacionElement.innerText = "Sin votos";
-        puntuacionElement.style.color = "#888"; // Gris
+        puntuacionElement.style.color = "#888";
+        puntuacionElement.style.display = "flex";
     }
 
     // Actualizar botones de editar y borrar
     const btnEditar = document.getElementById('btn-editar-detalle');
-    if (btnEditar) {
-        btnEditar.href = '/peliculas/editar/' + data.id;
-    }
+    if (btnEditar) btnEditar.href = '/peliculas/editar/' + data.id;
 
     const btnBorrar = document.getElementById('btn-borrar-detalle');
-    if (btnBorrar) {
-        btnBorrar.href = '/peliculas/borrar/' + data.id;
+    if (btnBorrar) btnBorrar.href = '/peliculas/borrar/' + data.id;
+
+    const btnUnir = document.getElementById('btn-btn-unirActor-pelicula');
+    if (btnUnir) btnUnir.href = '/peliculas/unirActor/' + data.id;
+
+    // --- AQUÍ ESTABA EL FALLO DEL BOTÓN VOTAR ---
+    const btnVotar = document.getElementById('btn-btn-puntuar-pelicula');
+    if (btnVotar) {
+        btnVotar.href = '/opinions/anadir/' + data.id; // Corregido 'opinions' (revisar tu Controller)
+        btnVotar.style.display = 'inline-block'; // ¡ESTO FALTABA!
     }
 
-    // OJO: He corregido el ID aquí para quitarle los espacios
-    const btnUnir = document.getElementById('btn-btn-unirActor-pelicula');
-    if (btnUnir) {
-        // Asumiendo que esta es la ruta correcta
-        btnUnir.href = '/peliculas/unirActor/' + data.id;
-    }
     // Gestión de la imagen
     const imgElement = document.getElementById('det-img');
     const placeholderElement = document.getElementById('det-img-placeholder');
@@ -61,40 +61,27 @@ function mostrarDetalles(elemento) {
         placeholderElement.style.display = 'block';
     }
 
-    // Mostrar contenedor y ocultar mensaje vacío
+    // Mostrar contenedores
     document.getElementById('mensaje-vacio').style.display = 'none';
     document.getElementById('contenido-detalle').style.display = 'flex';
     document.getElementById('contenido-listado').style.display = 'flex';
     document.getElementById('contenido-edicion-acciones').style.display = 'flex';
+
     document.querySelectorAll('.contenido-invisible').forEach(function(el) {
         el.style.display = 'block';
     });
 
-    // Scroll suave hacia el detalle
-    //document.getElementById('contenido-detalle').scrollIntoView({ behavior: 'smooth' });
-
-    // --- LÓGICA DE LA LISTA DE ACTORES ---
-    // Oculta todas las listas de actores que haya en pantalla
-    const todasLasListas = document.querySelectorAll('.lista-actores-item');
-    todasLasListas.forEach(function(lista) {
+    // Lógica de Actores
+    document.querySelectorAll('.lista-actores-item').forEach(function(lista) {
         lista.style.display = 'none';
     });
+    const listaActores = document.getElementById('lista-actores-' + data.id);
+    if(listaActores) listaActores.style.display = 'flex';
 
-    // Muestra la lista de actores correspondiente a la película seleccionada
-    document.getElementById('lista-actores-' + data.id).style.display = 'flex';
-
-    // (Esto va dentro de tu peliculas.js, donde gestionas los actores)
-
-    //Ocultar todas las listas de opiniones
+    // Lógica de Opiniones
     document.querySelectorAll('.lista-opiniones-item').forEach(el => {
         el.style.display = 'none';
     });
-
-    //Mostrar la lista de opiniones de la película seleccionada
     const listaOpiniones = document.getElementById('lista-opiniones-' + data.id);
-
-    if (listaOpiniones) {
-        listaOpiniones.style.display = 'flex';
-    }
-
+    if (listaOpiniones) listaOpiniones.style.display = 'flex';
 }

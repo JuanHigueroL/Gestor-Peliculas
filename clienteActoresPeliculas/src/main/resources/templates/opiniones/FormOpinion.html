@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Formulario Opinión</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<header th:replace="~{encabezado :: headerPrincipal('peliculas')}"></header>
+
+<div class="form-container" style="margin-top: 50px;">
+    <div class="form-card" style="max-width: 600px; margin: 0 auto;">
+
+        <h2 th:text="${titulo}" style="text-align: center; margin-bottom: 20px;">Opinión</h2>
+
+        <form th:action="@{/opinions/guardar}" method="post" th:object="${opinion}">
+
+            <input type="hidden" th:field="*{id}" />           <input type="hidden" th:field="*{idPelicula}" />   <div class="form-group">
+            <label for="puntuacion">Puntuación (0 - 10)</label>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="number" id="puntuacion" th:field="*{puntuacion}"
+                       min="0" max="10" required
+                       class="form-control" style="width: 80px;">
+                <span style="font-size: 1.5em; color: #f5c518;">★</span>
+            </div>
+        </div>
+
+            <div class="form-group">
+                <label for="opinionTexto">Tu Opinión</label>
+                <textarea id="opinionTexto" th:field="*{opinion}"
+                          rows="5"
+                          placeholder="Escribe aquí qué te ha parecido la película..."
+                          required
+                          style="width: 100%; padding: 10px; border-radius: 5px; background: var(--bg-input); color: var(--color-texto); border: 1px solid var(--borde-color);"></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <a th:href="@{/peliculas}" class="btn btn-volver">Cancelar</a>
+                <button type="submit" class="btn btn-guardar">Guardar Opinión</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/js/scripts.js}"></script>
+
+</body>
+</html>

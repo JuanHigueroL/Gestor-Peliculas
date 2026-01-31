@@ -34,6 +34,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User buscarPorUsername(String username) {
+        return userClient.buscarPorUsername(username);
+    }
+
+    @Override
     public void guardarUser(User user) {
         user.setEnable(true);
 

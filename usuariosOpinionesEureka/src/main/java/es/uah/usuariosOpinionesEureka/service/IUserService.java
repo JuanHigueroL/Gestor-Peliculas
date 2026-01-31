@@ -11,6 +11,8 @@ public interface IUserService {
 
     User buscarPorUsernameAndPassword(String user, String clave);
 
+    User buscarPorUsername(String username);
+
     void guardarUser(User user);
 
     void actualizarUser(User user);

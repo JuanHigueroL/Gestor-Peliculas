@@ -145,18 +145,42 @@ public class PeliculaController {
             }
         }
 
-        //Se crea un mapa: CLAVE = ID Película y Lista de Actores
+// Mapas
         Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
         Map<Integer, List<Opinion>> opinionesPorPelicula = new HashMap<>();
+        Map<Integer, Double> valoracionMediaPorPelicula = new HashMap<>();
 
         for (Pelicula peli : listado) {
-            // Asignamos al ID de la peli y sus actores
+            // Actores
             actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
-            opinionesPorPelicula.put(peli.getId(), opinionService.buscarOpinionPorPelicula(peli.getId()));
+
+            // Opiniones
+            List<Opinion> listaOpiniones = opinionService.buscarOpinionPorPelicula(peli.getId());
+
+            // Guardamos la lista en el mapa de opiniones
+            opinionesPorPelicula.put(peli.getId(), listaOpiniones);
+
+            // Calcular Media (Usando la variable 'listaOpiniones' que ya tenemos en memoria)
+            double mediaFinal = 0.0;
+
+            if (!listaOpiniones.isEmpty()) {
+                double sumaPuntuaciones = 0.0;
+                for (Opinion op : listaOpiniones) {
+                    sumaPuntuaciones += op.getPuntuacion();
+                }
+                // Calculamos media: Suma total / Cantidad de opiniones
+                mediaFinal = sumaPuntuaciones / listaOpiniones.size();
+            }
+
+            // Guardamos la media (será 0.0 si no había opiniones, evitando error NaN)
+            valoracionMediaPorPelicula.put(peli.getId(), mediaFinal);
         }
 
+        // Añadir al modelo
         model.addAttribute("actoresMap", actoresPorPelicula);
         model.addAttribute("opinionesMap", opinionesPorPelicula);
+        model.addAttribute("valoracionMediaMap", valoracionMediaPorPelicula); // ¡Perfecto que lo hayas añadido!
+
 
         PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/id?id=%s".formatted(id), listado);
         model.addAttribute("mensajeFiltro", "Se han filtrado las películas por el id '"+ id+ "'");
@@ -176,18 +200,42 @@ public class PeliculaController {
             listado= peliculaService.buscarPeliculasPorTitulo(titulo, pageable);
         }
 
-        //Se crea un mapa: CLAVE = ID Película y Lista de Actores
+        // Mapas
         Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
         Map<Integer, List<Opinion>> opinionesPorPelicula = new HashMap<>();
+        Map<Integer, Double> valoracionMediaPorPelicula = new HashMap<>();
 
         for (Pelicula peli : listado) {
-            // Asignamos al ID de la peli y sus actores
+            // Actores
             actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
-            opinionesPorPelicula.put(peli.getId(), opinionService.buscarOpinionPorPelicula(peli.getId()));
+
+            // Opiniones
+            List<Opinion> listaOpiniones = opinionService.buscarOpinionPorPelicula(peli.getId());
+
+            // Guardamos la lista en el mapa de opiniones
+            opinionesPorPelicula.put(peli.getId(), listaOpiniones);
+
+            // Calcular Media (Usando la variable 'listaOpiniones' que ya tenemos en memoria)
+            double mediaFinal = 0.0;
+
+            if (!listaOpiniones.isEmpty()) {
+                double sumaPuntuaciones = 0.0;
+                for (Opinion op : listaOpiniones) {
+                    sumaPuntuaciones += op.getPuntuacion();
+                }
+                // Calculamos media: Suma total / Cantidad de opiniones
+                mediaFinal = sumaPuntuaciones / listaOpiniones.size();
+            }
+
+            // Guardamos la media (será 0.0 si no había opiniones, evitando error NaN)
+            valoracionMediaPorPelicula.put(peli.getId(), mediaFinal);
         }
 
+        // Añadir al modelo
         model.addAttribute("actoresMap", actoresPorPelicula);
         model.addAttribute("opinionesMap", opinionesPorPelicula);
+        model.addAttribute("valoracionMediaMap", valoracionMediaPorPelicula); // ¡Perfecto que lo hayas añadido!
+
 
         PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/titulo?titulo=%s".formatted(titulo), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el título '"+ titulo+"'");
@@ -207,18 +255,42 @@ public class PeliculaController {
             listado= peliculaService.buscarPeliculasPorGenero(genero, pageable);
         }
 
-        //Se crea un mapa: CLAVE = ID Película y Lista de Actores
+        // Mapas
         Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
         Map<Integer, List<Opinion>> opinionesPorPelicula = new HashMap<>();
+        Map<Integer, Double> valoracionMediaPorPelicula = new HashMap<>();
 
         for (Pelicula peli : listado) {
-            // Asignamos al ID de la peli y sus actores
+            // Actores
             actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
-            opinionesPorPelicula.put(peli.getId(), opinionService.buscarOpinionPorPelicula(peli.getId()));
+
+            // Opiniones
+            List<Opinion> listaOpiniones = opinionService.buscarOpinionPorPelicula(peli.getId());
+
+            // Guardamos la lista en el mapa de opiniones
+            opinionesPorPelicula.put(peli.getId(), listaOpiniones);
+
+            // Calcular Media (Usando la variable 'listaOpiniones' que ya tenemos en memoria)
+            double mediaFinal = 0.0;
+
+            if (!listaOpiniones.isEmpty()) {
+                double sumaPuntuaciones = 0.0;
+                for (Opinion op : listaOpiniones) {
+                    sumaPuntuaciones += op.getPuntuacion();
+                }
+                // Calculamos media: Suma total / Cantidad de opiniones
+                mediaFinal = sumaPuntuaciones / listaOpiniones.size();
+            }
+
+            // Guardamos la media (será 0.0 si no había opiniones, evitando error NaN)
+            valoracionMediaPorPelicula.put(peli.getId(), mediaFinal);
         }
 
+        // Añadir al modelo
         model.addAttribute("actoresMap", actoresPorPelicula);
         model.addAttribute("opinionesMap", opinionesPorPelicula);
+        model.addAttribute("valoracionMediaMap", valoracionMediaPorPelicula); // ¡Perfecto que lo hayas añadido!
+
 
         PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/genero?genero=%s".formatted(genero), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el genero '"+ genero+"'");
@@ -238,18 +310,42 @@ public class PeliculaController {
             listado= peliculaService.buscarPeliculasPorActor(actor, pageable);
         }
 
-        //Se crea un mapa: CLAVE = ID Película y Lista de Actores
+        // Mapas
         Map<Integer, List<Actor>> actoresPorPelicula = new HashMap<>();
         Map<Integer, List<Opinion>> opinionesPorPelicula = new HashMap<>();
+        Map<Integer, Double> valoracionMediaPorPelicula = new HashMap<>();
 
         for (Pelicula peli : listado) {
-            // Asignamos al ID de la peli y sus actores
+            // Actores
             actoresPorPelicula.put(peli.getId(), peliculaService.buscarActoresDePelicula(peli.getId()));
-            opinionesPorPelicula.put(peli.getId(), opinionService.buscarOpinionPorPelicula(peli.getId()));
+
+            // Opiniones
+            List<Opinion> listaOpiniones = opinionService.buscarOpinionPorPelicula(peli.getId());
+
+            // Guardamos la lista en el mapa de opiniones
+            opinionesPorPelicula.put(peli.getId(), listaOpiniones);
+
+            // Calcular Media (Usando la variable 'listaOpiniones' que ya tenemos en memoria)
+            double mediaFinal = 0.0;
+
+            if (!listaOpiniones.isEmpty()) {
+                double sumaPuntuaciones = 0.0;
+                for (Opinion op : listaOpiniones) {
+                    sumaPuntuaciones += op.getPuntuacion();
+                }
+                // Calculamos media: Suma total / Cantidad de opiniones
+                mediaFinal = sumaPuntuaciones / listaOpiniones.size();
+            }
+
+            // Guardamos la media (será 0.0 si no había opiniones, evitando error NaN)
+            valoracionMediaPorPelicula.put(peli.getId(), mediaFinal);
         }
 
+        // Añadir al modelo
         model.addAttribute("actoresMap", actoresPorPelicula);
         model.addAttribute("opinionesMap", opinionesPorPelicula);
+        model.addAttribute("valoracionMediaMap", valoracionMediaPorPelicula); // ¡Perfecto que lo hayas añadido!
+
 
         PageRender<Pelicula> pageRender =new PageRender<Pelicula>("/peliculas/actor?actor=%s".formatted(actor), listado);
         model.addAttribute("mensajeFiltro", "Se ha filtrado las películas por el id del actor '"+ actor+"'");
