@@ -36,7 +36,7 @@
             <!-- Información de la película seleccionada, se añade la información mediante el script de películas a los id det-->
             <div class="detalle-info">
                 <h2 id="det-titulo"></h2>
-                <p style="margin-top: 15px; font-size: 0.9em; color: #888;">ID de referencia: #<span id="det-id"></span></p>
+                <p id="det-puntuacion" style="font-size: 1.8em; color: #f5c518; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 5px;"></p>                <p style="margin-top: 15px; font-size: 0.9em; color: #888;">ID de referencia: #<span id="det-id"></span></p>
                 <p><strong>Año:</strong> <span id="det-anio"></span></p>
                 <p><strong>Duración:</strong> <span id="det-duracion"></span></p>
                 <p><strong>País:</strong> <span id="det-pais"></span></p>
@@ -90,9 +90,46 @@
                 </div>
             </th:block>
 
-
-
         </div>
+
+        <p class="contenido-invisible" style="padding-bottom:10px"><strong>Opiniones y Críticas:</strong></p>
+
+            <div id="contenido-listado-opiniones">
+
+                <th:block th:each="entry : ${opinionesMap}">
+
+                    <div th:id="'lista-opiniones-' + ${entry.key}"
+                         class="lista-opiniones-item"
+                         style="display: none; gap: 15px; overflow-x: auto; padding-bottom: 10px;"> <th:block th:if="${not #lists.isEmpty(entry.value)}">
+                        <div th:each="op : ${entry.value}"
+                             style="background-color: var(--bg-input); padding: 15px; border-radius: 8px; min-width: 220px; max-width: 250px; flex-shrink: 0; display: flex; flex-direction: column; border: 1px solid var(--borde-color);">
+
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid var(--borde-color); padding-bottom: 5px;">
+                                <div style="display: flex; align-items: center; gap: 5px; font-weight: bold; font-size: 0.9em; color: var(--color-texto);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <span th:text="${op.usuario != null ? op.usuario.username : 'Usuario Eliminado'}">Usuario</span>
+                                </div>
+                                <span style="background-color: #f5c518; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.8em;">
+                                <span th:text="${op.puntuacion}">?</span>/10
+                            </span>
+                            </div>
+
+                            <p th:text="${op.opinion}"
+                               style="font-size: 0.85em; line-height: 1.4; color: var(--color-texto); margin: 0; font-style: italic;">
+                                Comentario...
+                            </p>
+                        </div>
+                    </th:block>
+
+                        <div th:if="${#lists.isEmpty(entry.value)}"
+                             style="color: var(--color-texto-sec); font-size: 0.9em; font-style: italic; padding: 5px;">
+                            No hay opiniones registradas para esta película.
+                        </div>
+
+                    </div>
+                </th:block>
+
+            </div>
 
         <div id="contenido-edicion-acciones">
             <!-- Acciones de editar y borrar la película seleccionada, se aplica el enlace mediante el script películas -->
@@ -128,6 +165,7 @@
              th:data-direccion="${pelicula.direccion}"
              th:data-sinopsis="${pelicula.sinopsis}"
              th:data-imagen="${pelicula.imagen}"
+             th:data-puntuacion="${valoracionMediaMap.get(pelicula.id)}"
              onclick="mostrarDetalles(this)"> <!-- Al hacer clic en la tarjeta, se muestra el detalle de estos datos -->
 
             <!-- Se muestra la imagen y en su defecto un placeholder, el título y año de la misma -->
@@ -142,6 +180,14 @@
                 word-wrap: break-word;
                 overflow-wrap: break-word;
                 word-break: break-word;"></h4>
+
+            <div style="margin-bottom: 5px;" th:with="media=${valoracionMediaMap.get(pelicula.id)}">
+                <span th:if="${media > 0}" style="color: #f5c518; font-weight: bold;">
+                    ★ <span th:text="${#numbers.formatDecimal(media, 1, 1)}">8.5</span>
+                </span>
+                <span th:if="${media == 0}" style="color: #ccc; font-size: 0.8em;">Sin votos</span>
+            </div>
+
             <small th:text="${pelicula.año}"></small>
         </div>
     </div>

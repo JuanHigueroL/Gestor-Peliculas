@@ -264,7 +264,7 @@ header p {
 }
 
 /* Contenedor para contenido adicional (frase) */
-.contenido-invisible {
+.contenido-invisible, .contenido-invisible2 {
     font-size: 1.1em;
     line-height: 1.4;
     color: var(--color-texto-sec);
