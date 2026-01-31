@@ -72,7 +72,7 @@ public class OpinionController {
 
     @GetMapping("/gestion") // Ejemplo de ruta: /opinions/gestion
     public String gestionOpiniones(Model model) {
-        List<Opinion> todasLasOpiniones = opinionService.buscarTodos(); // Necesitas este método en el servicio
+        List<Opinion> todasLasOpiniones = opinionService.buscarTodos();
         model.addAttribute("titulo", "Gestión de Opiniones");
         model.addAttribute("listadoOpiniones", todasLasOpiniones);
         return "opiniones/paginaPrincipalOpiniones";

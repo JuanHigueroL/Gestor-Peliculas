@@ -60,6 +60,17 @@ public class WebSecurityConfig {
                                 "/peliculas/unirPeliculaActor"
                         ).hasAuthority("ROLE_ADMIN")
 
+                        // Acciones de Gestion (Admin)
+                        .requestMatchers(
+                                "/opinions/gestion",
+                                "/opinions/borrar/**",
+                                "/user",
+                                "/user/listado",
+                                "/user/borrar/**",
+                                "/user/editar/**",
+                                "/user/guardar"
+                        ).hasAuthority("ROLE_ADMIN")
+
                         // -----------------------------------------------------------------
                         // ZONA PÚBLICA / CUALQUIER USUARIO
                         // -----------------------------------------------------------------
