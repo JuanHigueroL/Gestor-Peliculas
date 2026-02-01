@@ -1,8 +1,8 @@
 # 🎬 Cineando - Gestor de Películas y Opiniones (Microservicios)
 
-> [cite_start]**Práctica Final de Asignatura**: Frameworks Backend y Microservicios. [cite: 8, 73]
-> [cite_start]**Máster**: Desarrollo Ágil de Software para la Web. [cite: 6, 71]
-> [cite_start]**Autor**: Juan Higuero López. [cite: 74]
+> **Práctica Final de Asignatura**: Frameworks Backend y Microservicios.
+> **Máster**: Desarrollo Ágil de Software para la Web.
+> **Autor**: Juan Higuero López.
 
 Una plataforma web completa para la gestión de un catálogo cinematográfico, actores, usuarios y críticas. Este proyecto implementa una arquitectura moderna de **microservicios** utilizando el ecosistema **Spring Boot** y **Spring Cloud**.
 
@@ -89,4 +89,4 @@ Para ver el **Manual de Usuario completo**, consultar las **capturas de pantalla
 
 ---
 
-[cite_start]Desarrollado para la asignatura de **Frameworks Backend y Microservicios** - Universidad de Alcalá. [cite: 73]
+Desarrollado para la asignatura de **Frameworks Backend y Microservicios** - Universidad de Alcalá.
